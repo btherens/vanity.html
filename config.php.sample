@@ -1,0 +1,18 @@
+<?php
+/*
+ * config.php template
+ * environment variables and definitions
+ */
+
+/* MySQL variables */
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'vanitydb');
+define('DB_USER', 'vanityphpaccess');
+define('DB_PASS', 'password123');
+define('APP_TIMEZONE','America/Chicago');
+
+/* BASEDNS: the URL to use when creating links */
+define('BASEDNS','http://itcorp.com/');
+
+/* use this path for document resources */
+define('RESOURCEFILEPATH','/Users/user/documents/vanity.html/');
