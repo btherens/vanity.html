@@ -1,0 +1,1029 @@
+/* variables */
+
+:root {
+    --header-color: rgb(48, 61, 77);
+    --gradient-start: rgba(36, 46, 77, 0.9);
+    --gradient-mid: rgba(62, 75, 112, 0.9);
+    --gradient-end: rgba(98, 99, 102, 0.9);
+    /* use this color as a solid background behind --gradient-* colors */
+    --gradient-background: rgb(55, 55, 55);
+    /* accents */
+    --accentsgo: rgb(0, 206, 141);
+    --accentsfail: rgb(204, 134, 134);
+    --accentsna: rgb(204, 204, 204);
+    --accentsfail-dark: rgb(150, 34, 34);
+    --accentsna-dark: rgb(85, 85, 85);
+    /* button colors */
+    --button-color1: var(--accentsgo);
+    --button-color2: rgb(120, 120, 120);
+    --button-color3: var(--accentsfail);
+    --button-color-disabled: rgb(189, 0, 0);
+    --button-textcolor1: rgb(0, 0, 0);
+    --button-textcolor2: rgb(255, 255, 255);
+    /* the default scale of the interface */
+    --scale: 16px;
+}
+
+/* padding and border are included in the total width and height of the elements */
+
+* {
+    box-sizing: border-box;
+}
+
+/* 12 column grid for layout */
+
+/* mobile styles: all column widths fill the screen */
+
+[class*="col-"] {
+    width: 100%;
+}
+
+/* if the screen is large enough, switch to 12 column layout */
+
+@media only screen and (min-width: 1200px) {
+    .col-1 {
+        width: 8.33%;
+    }
+    .col-2 {
+        width: 16.66%;
+    }
+    .col-3 {
+        width: 25%;
+    }
+    .col-4 {
+        width: 33.33%;
+    }
+    .col-5 {
+        width: 41.66%;
+    }
+    .col-6 {
+        width: 50%;
+    }
+    .col-7 {
+        width: 58.33%;
+    }
+    .col-8 {
+        width: 66.66%;
+    }
+    .col-9 {
+        width: 75%;
+    }
+    .col-10 {
+        width: 83.33%;
+    }
+    .col-11 {
+        width: 91.66%;
+    }
+    .col-12 {
+        width: 100%;
+    }
+}
+
+/* rules for all column layouts */
+
+[class*="col-"] {
+    float: left;
+    padding: 1rem;
+}
+
+/* make sure floating elements aren't ignored by flow */
+
+.column-container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* looks */
+
+html {
+    font-size: var(--scale);
+    font-family: -apple-system, system-ui, Helvetica, sans-serif;
+}
+
+a {
+    color: inherit;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    margin: 0;
+    flex-direction: column;
+}
+
+/* ui styles */
+
+/* headers */
+
+h1, h2, h3 {
+    /* bold, so bold */
+    font-weight: 800;
+    /* 8 pixels above and below, 0 to left and right */
+    margin: 0.5em 0;
+}
+
+h1 {
+    color: var(--header-color);
+    font-size: 3em;
+    overflow: hidden;
+}
+
+h3 {
+    color: var(--header-color);
+    font-size: 1.5em;
+    overflow: hidden;
+}
+
+h1::after {
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 0.10em;
+    content: '';
+    display: block;
+    margin: 0.3em 0;
+    background-color: var(--header-color);
+    width: 1em;
+}
+
+h3::after {
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 0.1125em;
+    content: '';
+    display: block;
+    margin: 0.3em 0;
+    background-color: var(--header-color);
+    width: 1em;
+}
+
+/* buttons */
+
+button {
+    border: none;
+    padding: 1em 1.5em;
+    margin: 0 1em;
+}
+
+button, button.btn-set:hover {
+    background: none;
+    /* text color */
+    color: var(--button-textcolor1);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: 0.2s ease all;
+    z-index: 0;
+    border-radius: 0em;
+}
+
+div.buttonrow {
+    padding: 1em;
+    width: 100%;
+    display: inline-block;
+}
+
+div.buttonrow button:last-child {
+    float: left;
+}
+
+@media only screen and (min-width: 1200px) {
+    div.buttonrow button {
+        width: 100%;
+    }
+    div.buttonrow button:last-child {
+        float: right;
+    }
+}
+
+@media only screen and (min-width: 1300px) {
+    div.buttonrow button {
+        width: min-content
+    }
+    div.buttonrow button:last-child {
+        float: left;
+    }
+    div.buttonrow button:first-child {
+        float: right;
+    }
+}
+
+/* hover state and non-hover btn-set state */
+
+button:hover, button.btn-set {
+    /* text color (hover) */
+    color: var(--button-textcolor2);
+    border-radius: 0.1875em;
+}
+
+button:before {
+    position: absolute;
+    content: '';
+    /* bottom color */
+    background: var(--button-color1);
+    transition: 0.2s ease all;
+    z-index: -1;
+}
+
+button:after {
+    position: absolute;
+    content: '';
+    /* top color */
+    background: var(--button-color1);
+    transition: 0.2s ease all;
+    z-index: -1;
+}
+
+/* non-hover definitions and hover btn-set definitions */
+
+button:before, button.btn-set:hover:before {
+    top: calc(100% - 3px);
+    left: 0;
+    width: calc(100%);
+    height: 50%;
+}
+
+button:after, button.btn-set:hover:after {
+    bottom: calc(100% - 3px);
+    left: 0;
+    width: calc(100%);
+    height: 50%;
+}
+
+/* hover definitions and non-hover btn-set definitions */
+
+button:hover:before, button.btn-set:before {
+    top: 0%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: var(--button-color1);
+}
+
+button:hover:after, button.btn-set:after {
+    bottom: 0%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background: var(--button-color1);
+}
+
+/* alt button definitions */
+
+button.alt1:before, button.alt1.btn-set:hover:before {
+    background: var(--button-color2);
+}
+
+button.alt1:after, button.alt1.btn-set:hover:after {
+    background: var(--button-color2);
+}
+
+button.alt1:hover:before, button.alt1.btn-set:before {
+    background: var(--button-color2);
+}
+
+button.alt1:hover:after, button.alt1.btn-set:after {
+    background: var(--button-color2);
+}
+
+button.alt2:before, button.alt2.btn-set:hover:before {
+    background: var(--button-color3);
+}
+
+button.alt2:after, button.alt2.btn-set:hover:after {
+    background: var(--button-color3);
+}
+
+button.alt2:hover:before, button.alt2.btn-set:before {
+    background: var(--button-color3);
+}
+
+button.alt2:hover:after, button.alt2.btn-set:after {
+    background: var(--button-color3);
+}
+
+/* disabled button settings */
+
+button:disabled {
+    /* text color (hover) */
+    color: var(--button-textcolor2);
+    border-radius: 0.1875em;
+}
+
+button:disabled:before {
+    top: 0%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+}
+
+button:disabled:after {
+    bottom: 0%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+}
+
+button:disabled.disabled:before {
+    background: var(--button-color-disabled);
+}
+
+button:disabled.disabled:after {
+    background: var(--button-color-disabled);
+}
+
+/* table formats */
+
+table {
+    color: rgb(51, 51, 51);
+    width: 100%;
+    /* Table reset stuff */
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td, th {
+    border: 0 none;
+    height: 1.875em;
+    text-align: left;
+    padding-left: 1em;
+}
+
+th {
+    /* Gradient Background */
+    background: linear-gradient(var(--gradient-start) 0%, var(--gradient-mid) 100%);
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    height: 2.5em;
+}
+
+td {
+    background: rgb(250, 250, 250);
+}
+
+/* Zebra Stripe Rows */
+
+tr:nth-child(even) td {
+    background: rgb(237, 237, 237);
+}
+
+tr:nth-child(odd) td {
+    background: rgb(253, 253, 253);
+}
+
+/* add border-radius to specific cells! */
+
+tr:first-child th:nth-child(1) {
+    border-radius: 0.3125em 0 0 0;
+}
+
+tr:first-child th:last-child {
+    border-radius: 0 0.3125em 0 0;
+}
+
+/* optional blank column!
+ * use table class="invisible-column"
+ */
+
+.invisible-column tr td:first-child, .invisible-column tr th:first-child {
+    background: none;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 0.875em;
+    text-align: right;
+    padding-right: 0.625em;
+    width: 5em;
+}
+
+.invisible-column tr:first-child th:nth-child(2) {
+    border-radius: 0.3125em 0 0 0;
+}
+
+/* custom button styles when in table cells */
+
+table button {
+    margin: 0;
+}
+
+/* placeholder text colors */
+
+::placeholder {
+    color: rgb(143, 143, 143);
+}
+
+/*
+ * == general theme definitions ==
+ */
+
+.content {
+    flex: 1 0 auto;
+    margin-top: 4rem;
+    transition: margin-left 0.4s;
+}
+
+.footer {
+    flex-shrink: 0;
+    padding: 1rem;
+    transition: margin-left 0.4s;
+    text-align: right;
+}
+
+/* size when sidebar becomes visible, pushing content to the right with margin */
+
+@media only screen and (min-width: 1000px) {
+    .content, .footer {
+        margin-left: 19rem;
+    }
+}
+
+/* == sidebar / nav definitions */
+
+.sidebar {
+    color: rgb(255, 255, 255);
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    background-color: var(--gradient-background);
+    z-index: 3;
+    width: 19rem;
+    height: 100%;
+    font-weight: bold;
+    font-size: 1.125em;
+    top: 0;
+    position: fixed;
+    overflow: auto;
+    box-sizing: inherit;
+}
+
+.sidebar .sidebar-btn {
+    width: 100%;
+    font-size: 1.375em;
+    position: absolute;
+    left: 0;
+    top: 0;
+    user-select: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    height: 3.5rem;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+    box-sizing: inherit;
+}
+
+.sidebar a:hover {
+    color: #000;
+    background-color: #ccc;
+}
+
+.sidebar div.sidebar-title {
+    padding: 4rem 1rem;
+    font-size: 1.5em;
+    font-weight: 400;
+}
+
+div.sidebar-title a {
+    text-decoration: inherit;
+}
+
+div.sidebar-title a:hover {
+    color: inherit;
+    background-color: inherit;
+}
+
+.sidebar-menu-list {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.userpanel {
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    height: 5.5rem;
+    width: 19rem;
+    padding: 1rem;
+    /* colors */
+    background: rgba(0, 0, 0, 0.4);
+    color: rgb(255, 255, 255);
+}
+
+.userpanel .profile-pic {
+    float: left;
+    height: 100%;
+    /* white background for for image transparency */
+    background-color: rgb(255, 255, 255);
+}
+
+.userpanel .text {
+    text-align: right;
+}
+
+.userpanel a {
+    font-size: 0.7em;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.userpanel .role {
+    font-size: 0.7em;
+    color: rgb(200, 200, 200);
+    font-style: italic;
+}
+
+/* sidebar content buttons */
+
+.sidebar .sidebar-menu-list a {
+    width: 100%;
+    float: none;
+    outline: 0;
+    border: none;
+    display: inline-block;
+    padding: 0.5rem 1.0rem;
+    overflow: hidden;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+/* the default (disabled) */
+
+.sidebar .sidebar-menu-list a {
+    color: var(--button-textcolor1);
+    background-color: rgb(180, 180, 180);
+}
+
+/* style for active sidebar items */
+.sidebar .sidebar-menu-list a.activebar {
+    background: none;
+    color: var(--button-textcolor2);
+    position: relative;
+    transition: 0.2s ease all;
+    z-index: 0;
+    border-radius: 0em;
+}
+
+.sidebar .sidebar-menu-list a.activebar:hover {
+    color: var(--button-textcolor2);
+}
+
+.sidebar .sidebar-menu-list a.activebar:before {
+    position: absolute;
+    content: '';
+    background: var(--accentsgo);
+    transition: 0.2s ease all;
+    z-index: -1;
+    top: calc(100% - 3px);
+    left: 0;
+    width: calc(100%);
+}
+
+.sidebar .sidebar-menu-list a.activebar:hover:before {
+    top: 0%;
+    height: 50%;
+}
+
+.sidebar .sidebar-menu-list a.activebar:after {
+    position: absolute;
+    content: '';
+    background: var(--accentsgo);
+    transition: 0.2s ease all;
+    z-index: -1;
+    bottom: calc(100% - 3px);
+    left: 0;
+    width: calc(100%);
+}
+
+.sidebar .sidebar-menu-list a.activebar:hover:after {
+    bottom: 0%;
+    height: 50%;
+}
+
+.sidebar-header {
+    color: rgb(255, 255, 255);
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid));
+    background-color: var(--gradient-background);
+    font-size: 1.5em;
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 4rem;
+    z-index: 1;
+    padding: 1rem;
+    padding-bottom: 0.2rem;
+    padding-top: 0.2rem;
+}
+
+.sidebar-header a {
+    text-decoration: inherit;
+}
+
+/* visibility settings for mobile */
+
+/* show header, and show close menu button in sidebar */
+
+.sidebar-header, .sidebar-btn {
+    display: block;
+}
+
+/* by default, do not display sidebar */
+
+.sidebar {
+    display: none;
+}
+
+/* visibility settings for desktop */
+
+@media only screen and (min-width: 1000px) {
+    /* hide header and the close menu button */
+    .sidebar-header, .sidebar-btn {
+        display: none;
+    }
+    /* always show sidebar */
+    .sidebar {
+        display: block;
+    }
+}
+
+.sidebar-header:after, .sidebar-header:before {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.sidebar-hamburgerbtn {
+    color: #fff;
+    margin-right: 1em;
+    user-select: none;
+    border: none;
+    display: inline-block;
+    padding: 0.5rem 1.0rem;
+    vertical-align: middle;
+    overflow: hidden;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.sidebar-hamburgerbtn:hover {
+    color: #000;
+    background-color: #ccc;
+}
+
+.overlay {
+    cursor: pointer;
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+#sidebar-main.show, div#sidebar-overlay.show {
+    display: block;
+}
+
+/* episode detail style */
+
+div.episode-dtl {
+    max-width: 40em;
+}
+
+div.episode-dtl p {
+    font-size: 0.9 em;
+    color: rgb(45, 45, 45);
+}
+
+div.episode-dtl .metadata {
+    margin-bottom: 0.5em;
+    margin-top: 0;
+    color: rgb(136, 136, 136);
+    font-size: 0.85em;
+    line-height: 1.0em;
+}
+
+div.episode-dtl .metadata time {
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+div.player-box {
+    width: 100%;
+    height: auto;
+    overflow: auto;
+}
+
+div.player-box audio {
+    width: calc(100% - 10em);
+    display: block;
+    margin: 1em auto;
+}
+
+div.player-box img {
+    float: left;
+    width: 10em;
+    padding-right: 1em;
+}
+
+div.player-box p.subtitle {
+    width: 80%;
+    margin: 0 auto 2em auto;
+    color: rgb(85, 85, 85);
+    font-size: 0.85em;
+    line-height: 1.33em;
+    text-align: left;
+}
+
+/* generic input settings */
+
+input {
+    padding: 0.6em;
+    margin-bottom: 0.5em;
+    width: 100%;
+    font-size: 0.8em;
+}
+
+input:focus {
+    outline: none;
+    transition: transform 0.2s ease;
+    border: 0.125rem solid rgb(85, 85, 85);
+}
+
+/* checkbox input overrides */
+
+input[type=checkbox] {
+    width: min-content;
+}
+
+input[type=checkbox]:focus {
+    width: min-content;
+    border: none;
+    outline: 0.125rem solid rgb(85, 85, 85);
+}
+
+textarea {
+    width: 100%;
+    padding: 0.6em;
+    font-size: 0.8em;
+    font-family: Monaco, monospace;
+    resize: none;
+}
+
+textarea:focus {
+    outline: none;
+    transition: transform 0.2s ease;
+    border: 0.125rem solid rgb(85, 85, 85);
+}
+
+label {
+    padding: 0.2em;
+    font-size: 0.6em;
+}
+
+/* height class statements, meant for inputs but not limited */
+
+.hgt-1 {
+    height: 3em;
+}
+
+.hgt-2 {
+    height: 4.5em;
+}
+
+.hgt-3 {
+    height: 9em;
+}
+
+.hgt-4 {
+    height: 12em;
+}
+
+/* justify buttons inside forms to right by default */
+
+form button {
+    float: right;
+}
+
+/* update-* states */
+
+[class*="update-"] {
+    border-radius: 0.25rem;
+    background-color: rgb(248, 248, 248);
+}
+
+.update-no {
+    border: 0.125rem solid var(--accentsna);
+}
+
+.update-fail {
+    border: 0.125rem solid var(--accentsfail);
+}
+
+.update-yes {
+    border: 0.125rem solid var(--accentsgo);
+}
+
+/* update-* checkbox styles */
+
+[class*="update-"][type=checkbox] {
+    border-radius: none;
+    background-color: rgb(248, 248, 248);
+}
+
+[type=checkbox].update-no {
+    outline: 0.125rem solid var(--accentsna);
+}
+
+[type=checkbox].update-fail {
+    outline: 0.125rem solid var(--accentsfail);
+}
+
+[type=checkbox].update-yes {
+    outline: 0.125rem solid var(--accentsgo);
+}
+
+/* scale things down from 1000px to 1300px */
+
+@media only screen and (min-width: 1000px) {
+    #leftview, #midview, #rightview {
+        font-size: calc(0.625 * var(--scale));
+    }
+}
+
+/* after 1300px width, return to default scale */
+
+@media only screen and (min-width: 1300px) {
+    #leftview, #midview, #rightview {
+        font-size: var(--scale);
+    }
+}
+
+/* modal form theming */
+
+/* The Modal (background) */
+
+.modal {
+    /* hidden by default */
+    display: none;
+    position: fixed;
+    z-index: 4;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* Modal Content/Box */
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 1rem;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+}
+
+.modal.show {
+    display: flex;
+}
+
+/* background for modal pages (wrap in div class="canvas" */
+
+div.canvas {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+    height: 100%;
+}
+
+/* theme for form window, use div class="form" */
+
+div.form {
+    width: 100%;
+    padding: 0.5em 1.5em;
+    position: relative;
+    background: rgba(0, 0, 0, 0.5);
+    margin: 0.5em;
+    color: rgb(255, 255, 255);
+}
+
+div.form:before {
+    content: '';
+    position: absolute;
+    top: -0.1875em;
+    left: 0;
+    height: 0.1875em;
+    width: 100%;
+    background: var(--accentsgo);
+}
+
+@media screen and (min-width: 600px) {
+    div.form {
+        max-width: 20em;
+    }
+}
+
+div.form p {
+    margin-top: 1em;
+    font-size: 0.65em;
+    text-align: center;
+}
+
+div.form label {
+    padding: 0.2em;
+}
+
+div.form hr {
+    height: 0.1875em;
+    border: none;
+    background-color: rgba(143, 143, 143, 0.8);
+}
+
+div.form .profile-pic {
+    margin: auto;
+    display: block;
+    width: 8em;
+    height: 8em;
+    border: 3px solid rgb(50, 50, 50);
+    background-color: rgb(235, 235, 235);
+}
+
+/* customized input styles for div.form */
+
+div.form input:focus {
+    border: 0.125rem solid var(--accentsna);
+}
+
+/* update-* states (div.form variant) */
+
+div.form input {
+    background-color: rgba(10, 10, 10, 0.5);
+    color: rgb(255, 255, 255);
+    border-radius: 0.25rem;
+    border: 0.125rem solid var(--accentsna-dark);
+}
+
+div.form input:disabled {
+    color: rgb(200, 200, 200)
+}
+
+div.form .update-fail {
+    border: 0.125rem solid var(--accentsfail-dark);
+}
+
+div.form .update-yes {
+    border: 0.125rem solid var(--accentsgo);
+}
+
+/* update-* checkbox styles (div.form variant) */
+
+div.form [class*="update-"][type=checkbox] {
+    border-radius: none;
+    background-color: rgb(248, 248, 248);
+}
+
+div.form [type=checkbox].update-no {
+    outline: 0.125rem solid var(--accentsna-dark);
+}
+
+div.form [type=checkbox].update-fail {
+    outline: 0.125rem solid var(--accentsfail-dark);
+}
+
+div.form [type=checkbox].update-yes {
+    outline: 0.125rem solid var(--accentsgo);
+}
+
+div.form button {
+    padding: 1em;
+    width: 100%;
+    font-size: 0.75em;
+    font-weight: 800;
+    margin: 1em 0;
+    color: var(--button-textcolor2);
+}
