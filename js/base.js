@@ -22,7 +22,7 @@ var limiter = function () {
     }
 }();
 
-// extend Modal class with ok/cancel
+/* simple class to generate and handle a modal dialog */
 class ConfirmModal {
     constructor({ text, trueButtonText, falseButtonText }) {
         /* default values */
@@ -267,13 +267,6 @@ function setModalContent(content) {
     modalDOMcontainer.innerHTML = '';
 
     modalDOMcontainer.appendChild(content);
-}
-
-// create a jdenticon svg from a string
-// save svg in avatarformid
-function setAvatar(string, avatarfrmid) {
-    document.getElementById(avatarfrmid).value = jdenticon.toSvg(string, 100);
-
 }
 
 // loop through all elements with .script-active class and pass to processActive

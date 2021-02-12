@@ -16,7 +16,6 @@ class Controller
         $this->_controller = ucwords(__CLASS__);
         $this->_action = $action;
         $this->_modelBaseName = $model;
-
     }
 
     protected function _setModel($modelName)

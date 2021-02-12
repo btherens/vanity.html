@@ -2,7 +2,7 @@
 /* default values */
 $controller = 'canvas';
 $action = 'index';
-$query = array(null);
+$query = array( null );
 
 /* determine if the client request was ajax */
 $isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) ? ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ? true : false) : false;
@@ -19,7 +19,9 @@ if (isset($_GET['load']))
     /* collect any remaining arguments from params in query object */
     if ( isset( $params[2] ) && !empty( $params[2] ) ) { $query = array_slice($params, 2); }
 }
+/* model name will match the controller */
 $modelName = $controller;
+/* normalize request value to controller naming convention */
 $controller .= 'Controller';
 
 /* load the class, if it exists */
@@ -27,43 +29,8 @@ if   ( class_exists( $controller ) ) { $load = new $controller($modelName, $acti
 /* throw an error if it doesn't */
 else { http_response_code(404); die('please check your url'); }
 
-/* proceed if the method exists */
-if (method_exists($load, $action))
-{
-    /*
-     * single page system
-     * send direct request to controller if ajax request
-     */
-    if ( !$isAjax )
-    {
-        /* run the method called by this request */
-        /* $output = $load->$action($query); */
-        /* create the single page object */
-        $canvas = new CanvasController('Canvas','main');
-        /* execute main method (generage page response) */
-        $output = $canvas->main();
-    }
-    /*
-     * direct route (no app chrome) for:
-     * ajax requests
-     * routes that aren't using the app window
-     */
-    else
-    {
-        switch ( count( $query ) )
-        {
-            case 3:
-                $output = $load->$action($query[0], $query[1], $query[2]);
-                break;
-            case 2:
-                $output = $load->$action($query[0], $query[1]);
-                break;
-            case 1:
-                $output = $load->$action($query[0]);
-                break;
-        }
-    }
-}
+/* execute method */
+if ( method_exists( $load, $action ) ) { $load->$action( $query ); }
 /* throw an error if we couldn't find a method that matched request */
 else { http_response_code(404); die('Invalid method. Please check the URL.'); }
 
