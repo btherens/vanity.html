@@ -1,43 +1,31 @@
 <?php
 
-class HomeController extends Controller
+class CanvasController extends Controller
 {
+
+    public $title = 'Starship Therapise';
 
     public function __construct($model, $action)
     {
-        parent::__construct('home', $action);
+        parent::__construct($model, $action);
         /* only use index view */
-        $this->_setView('index');
+        $this->_setView($action);
         /* set base class */
-        $this->_setModel('');
-        $this->_requireAccount();
-    }
-
-    /* redirect if page is empty */
-    public function index()
-    {
-        header('Location: /feeds');
-        exit;
+        #$this->_setModel('');
     }
 
     /* route for single app system */
-    public function main($pagecontent, $active)
+    public function main($pagecontent,$title,$shareimage,$description,$audioprop)
     {
-        $this->_view->set('title', 'rss');
         $this->_view->set('pagecontent', $pagecontent);
-        $this->_view->set('active', $active);
-
-        if (Modal::exists())
-        {
-            $this->setModal();
-        }
+        # override title logic for home page
+        $finaltitle = $title == 'Starship Therapise | Exploring Pop Culture, Fandom and Psychology' ? $title : $title . ' | ' . $this->title;
+        $this->_view->set('title', $finaltitle);
+        $this->_view->set('shareimage',$shareimage);
+        $this->_view->set('description',$description);
+        $this->_view->set('audioprop',$audioprop);
 
         return $this->_view->output();
-    }
-
-    private function setModal()
-    {
-        $this->_view->set('modalcontent', Modal::setString());
     }
 
 }
