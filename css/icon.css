@@ -1,11 +1,11 @@
 /*
  * inline svg styles - manages size and text alignment
  * <h3>
- &   <div class="icon baseline">
- &     <svg />
- &   </div>
- &   text
- & </h3>
+ *   <div class="icon baseline">
+ *     <svg />
+ *   </div>
+ *   text
+ * </h3>
  */
 /* apply to any icon class */
  .icon {
