@@ -1,0 +1,27 @@
+/*
+ * inline svg styles - manages size and text alignment
+ * <h3>
+ &   <div class="icon baseline">
+ &     <svg />
+ &   </div>
+ &   text
+ & </h3>
+ */
+/* apply to any icon class */
+ .icon {
+    display: inline-flex;
+    align-self: center;
+}
+/* svg styles */
+.icon svg {
+    /* scale 1:1 with text */
+    height: 1em;
+    width: 1em;
+    /* use accent color for icon color */
+    fill: var(--canvas-accentcolor1);
+}
+/* offset assistance */
+.icon.baseline svg {
+    top: .125em;
+    position: relative;
+}

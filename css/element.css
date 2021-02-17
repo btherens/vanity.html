@@ -1,0 +1,25 @@
+hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+    box-sizing: content-box;
+    height: 0;
+    overflow: visible;
+}
+
+/* page scale */
+
+html {
+    font-size: var(--scale);
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    margin: 0;
+    flex-direction: column;
+    background-color: var(--canvas-bgcolor);
+}
