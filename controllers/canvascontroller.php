@@ -25,6 +25,9 @@ class CanvasController extends Controller
         $skill = new SkillController();
         $this->_view->set( 'skill', $skill->index() );
 
+        $language = new LanguageController();
+        $this->_view->set( 'language', $language->index() );
+
         /* send view output to response */
         echo $this->_view->output();
     }

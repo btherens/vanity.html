@@ -15,11 +15,7 @@
                 <div class="container">
                         <?php echo $profile ?>
                         <?php echo $skill ?>
-                        <hr>
-                        <h3><div class="icon baseline"><?php InlineAsset::svg( 'gear' ) ?></div>languages</h3>
-                        <p>English</p>
-                        <p>Spanish</p>
-                        <p>German</p>
+                        <?php echo $language ?>
                     </div>
                 </div>
             </div>
