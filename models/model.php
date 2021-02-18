@@ -8,14 +8,11 @@ class Model
 
     private $_insert_id;
 
-    private $_basepath;
-
     protected $_result;
 
     public function __construct()
     {
         $this->_db = Db::init();
-        $this->_basepath = RESOURCEFILEPATH;
     }
 
     /* set _sql property */
@@ -150,48 +147,51 @@ class Model
         };
     }
 
-    /* a simple web request for headers (response object returned) */
-    protected function getHeaders(string $url)
+    /* attempt to create table using a class' static $_definition property */
+    protected function _createTable(): void
     {
-        stream_context_set_default(
-            array(
-                'http' => array(
-                    'method' => 'HEAD',
-                ),
-            )
+        /* check for table */
+        $this->setSql(
+            'SELECT COUNT(*) AS `exists`
+            FROM  information_schema.tables
+            WHERE table_schema = ?
+            AND   table_name = ?
+            LIMIT 1;'
         );
-        if ($url)
-        {
-            try {
-                $headers = get_headers($url);}
-            catch (Exception $e)
-            {
-                $headers = false;}}
-        else
-        {
-            $headers = false;}
+        $this->setParam(array( Db::$name, $this::$_definition['name'] ), array('s','s'));
+        $this->runQuery();
 
-        return $headers;
-    }
-
-    /* get file from application path */
-    protected function getFile(string $name)
-    {
-        return readfile($this->_basepath . $name);
-    }
-
-    /* given a name, save file to disk. return success */
-    protected function setFile(string $name, $file): bool
-    {
-        $output = false;
-        $handler = fopen($this->_basepath . $name, 'w');
-        if ($handler)
+        if (!$this->_result[0]->exists)
         {
-            fwrite($handler, $file);
-            fclose($handler);
-            $output = true;
+            /* set create script */
+            $this->setSql( $this::$_definition['create'] );
+            /* execute on database */
+            $this->runQuery();
         }
-        return $output;
+    }
+
+    /* SQL results managed here */
+    private $_data;
+    /* getter for data object */
+    protected function _getData(): array
+    {
+        if (!$this->_data)
+        {
+            /* collect variables from child class */
+            $def = &$this::$_definition;
+            $n = &$def['name'];
+            $l = &$def['limit'];
+
+            /* set select query to property, LIMIT will only be applied if $l is truthy */
+            $this->setSql( 'SELECT * FROM `' . $n . '`' . ( $l ? ' LIMIT ' . $l : '' ) . ';' );
+            try   { $this->runQuery(); }
+            /* if the query fails, pass to createTable method and then bail */
+            catch ( Exception $e ) { $this->_createTable(); die; }
+            /* save result to _data */
+            $this->_data = $this->_result;
+        }
+        /* return property */
+        return $this->_data;
     }
 
 }

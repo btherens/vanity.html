@@ -1,43 +1,41 @@
 <?php
 
-class HomeController extends Controller
+class CanvasController extends Controller
 {
 
-    public function __construct($model, $action)
+    public function __construct( $action )
     {
-        parent::__construct('home', $action);
-        /* only use index view */
-        $this->_setView('index');
-        /* set base class */
-        $this->_setModel('');
-        $this->_requireAccount();
-    }
-
-    /* redirect if page is empty */
-    public function index()
-    {
-        header('Location: /feeds');
-        exit;
+        $model = 'Canvas';
+        parent::__construct( $model, $action );
+        $this->_setView( $action );
+        $this->_setModel($model);
     }
 
     /* route for single app system */
-    public function main($pagecontent, $active)
+    public function index()
     {
-        $this->_view->set('title', 'rss');
-        $this->_view->set('pagecontent', $pagecontent);
-        $this->_view->set('active', $active);
+        /* create instances of other controllers here and render their view content*/
+        $profile = new ProfileController();
+        $this->_view->set( 'title', $profile->name() );
+        $this->_view->set( 'profile', $profile->index() );
 
-        if (Modal::exists())
-        {
-            $this->setModal();
-        }
+        $skill = new SkillController();
+        $this->_view->set( 'skill', $skill->index() );
 
+        $language = new LanguageController();
+        $this->_view->set( 'language', $language->index() );
+
+        $work = new WorkController();
+        $this->_view->set( 'work', $work->index() );
+
+        $education = new EducationController();
+        $this->_view->set( 'education', $education->index() );
+
+        /* set source code URL to view */
+        $this->_view->set( 'sourcecodeurl', $this->_model->getSourceCodeUrl() );
+
+        /* render view and return */
         return $this->_view->output();
-    }
-
-    private function setModal()
-    {
-        $this->_view->set('modalcontent', Modal::setString());
     }
 
 }

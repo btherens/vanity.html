@@ -2,6 +2,9 @@
 
 class Db
 {
+
+    public static $name;
+
     private static $db;
     private static $TZoffset;
 
@@ -23,6 +26,7 @@ class Db
             {
                 die('Connection error: ' . $e->getMessage());
             }
+            self::$name = DB_NAME;
         }
         return self::$db;
     }
