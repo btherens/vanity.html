@@ -14,5 +14,5 @@ define('APP_TIMEZONE','America/Chicago');
 /* BASEDNS: the URL to use when creating links */
 define('BASEDNS','http://itcorp.com/');
 
-/* use this path for document resources */
-define('RESOURCEFILEPATH','/Users/user/documents/vanity.html/');
+/* use this path for links to source code (leave blank to hide source code reference in footer) */
+define('SOURCECODEURL','');
