@@ -10,6 +10,3 @@ RewriteRule ^(.*)$ index.php?load=$1 [PT,L,QSA]
 
 # protect config.php
 RewriteRule ^config.php?$ / [L,R,NC]
-
-# well-known uri
-Redirect 302 /.well-known/change-password /account/edit
