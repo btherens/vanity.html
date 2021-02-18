@@ -3,23 +3,20 @@
 class CanvasController extends Controller
 {
 
-    public $title = 'test title';
-
     public function __construct( $action )
     {
         $model = 'Canvas';
         parent::__construct( $model, $action );
         $this->_setView( $action );
-        // $this->_setModel($model);
+        $this->_setModel($model);
     }
 
     /* route for single app system */
     public function index()
     {
-        /* set variables to view */
-        $this->_view->set( 'title', $this->title );
-
+        /* create instances of other controllers here and render their view content*/
         $profile = new ProfileController();
+        $this->_view->set( 'title', $profile->name() );
         $this->_view->set( 'profile', $profile->index() );
 
         $skill = new SkillController();
@@ -28,8 +25,17 @@ class CanvasController extends Controller
         $language = new LanguageController();
         $this->_view->set( 'language', $language->index() );
 
-        /* send view output to response */
-        echo $this->_view->output();
+        $work = new WorkController();
+        $this->_view->set( 'work', $work->index() );
+
+        $education = new EducationController();
+        $this->_view->set( 'education', $education->index() );
+
+        /* set source code URL to view */
+        $this->_view->set( 'sourcecodeurl', $this->_model->getSourceCodeUrl() );
+
+        /* render view and return */
+        return $this->_view->output();
     }
 
 }

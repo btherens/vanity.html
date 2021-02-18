@@ -24,3 +24,5 @@ h6 {
     color: var(--canvas-accentcolor1);
     font-size: 1em;
 }
+/* don't add color styles to hyperlinks */
+a { color: inherit; }

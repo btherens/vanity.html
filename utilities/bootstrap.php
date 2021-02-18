@@ -27,7 +27,7 @@ if   ( class_exists( $controller ) ) { $load = new $controller( $action ); }
 /* throw an error if it doesn't */
 else { http_response_code(404); die('please check your url'); }
 
-/* execute method */
-if   ( method_exists( $load, $action ) ) { $load->$action( $query ); }
+/* execute method and send to output buffer */
+if   ( method_exists( $load, $action ) ) { echo $load->$action( $query ); }
 /* throw an error if we couldn't find a method that matched request */
 else { http_response_code(404); die('Invalid method. Please check the URL.'); }

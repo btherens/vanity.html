@@ -10,7 +10,7 @@ class ProfileController extends Controller
         $this->_setView( $action );
         $this->_setModel( $model );
     }
-
+    /* render index view with values from model and return */
     public function index()
     {
         /* map model properties to view variables */
@@ -20,5 +20,7 @@ class ProfileController extends Controller
         /* render view and return */
         return $this->_view->output();
     }
+    /* return the name from profile */
+    public function name() { return $this->_model->getName(); }
 
 }

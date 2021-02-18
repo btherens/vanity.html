@@ -8,14 +8,11 @@ class Model
 
     private $_insert_id;
 
-    private $_basepath;
-
     protected $_result;
 
     public function __construct()
     {
         $this->_db = Db::init();
-        $this->_basepath = RESOURCEFILEPATH;
     }
 
     /* set _sql property */
