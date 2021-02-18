@@ -3,7 +3,7 @@
 class ProfileController extends Controller
 {
 
-    public function __construct( $action )
+    public function __construct( $action = 'index' )
     {
         $model = 'Profile';
         parent::__construct( $model, $action );

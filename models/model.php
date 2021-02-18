@@ -185,6 +185,7 @@ class Model
             $n = &$def['name'];
             $l = &$def['limit'];
 
+            /* set select query to property, LIMIT will only be applied if $l is truthy */
             $this->setSql( 'SELECT * FROM `' . $n . '`' . ( $l ? ' LIMIT ' . $l : '' ) . ';' );
             try   { $this->runQuery(); }
             /* if the query fails, pass to createTable method and then bail */

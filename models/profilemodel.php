@@ -22,10 +22,8 @@ class ProfileModel extends Model
             SELECT 'Bilbo Baggins', 'raconteur', 'Hobbiton, Shire';"
     ];
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+    /* constructor */
+    public function __construct() { parent::__construct(); }
 
     /* name */
     public function getName(): string
