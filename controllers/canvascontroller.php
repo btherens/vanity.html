@@ -18,8 +18,13 @@ class CanvasController extends Controller
     {
         /* set variables to view */
         $this->_view->set( 'title', $this->title );
-        $profile = new ProfileController('index');
+
+        $profile = new ProfileController();
         $this->_view->set( 'profile', $profile->index() );
+
+        $skill = new SkillController();
+        $this->_view->set( 'skill', $skill->index() );
+
         /* send view output to response */
         echo $this->_view->output();
     }

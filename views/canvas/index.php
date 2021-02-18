@@ -13,14 +13,8 @@
 
             <div class="col-1">
                 <div class="container">
-
                         <?php echo $profile ?>
-                        <hr>
-                        <h3><div class="icon baseline"><?php InlineAsset::svg( 'gear' ) ?></div>skills</h3>
-                        <p>Adobe Photoshop</p>
-                        <p>Photography</p>
-                        <p>Illustrator</p>
-                        <p>Media</p>
+                        <?php echo $skill ?>
                         <hr>
                         <h3><div class="icon baseline"><?php InlineAsset::svg( 'gear' ) ?></div>languages</h3>
                         <p>English</p>
