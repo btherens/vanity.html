@@ -1,0 +1,28 @@
+/* global - default settings for all text */
+body, h1, h2, h3, h4, h5, h6 {
+    /* helvetica font - fallback to browser sans-serif */
+    font-family: 'Helvetica', sans-serif;
+    font-weight: 400;
+    /* */
+    margin: 0.5em 0;
+    line-height: 1.5;
+}
+/* header settings */
+h2 {
+    font-size: 2em;
+}
+h3 {
+    font-size: 1.125em;
+    font-weight: bolder;
+}
+h5 {
+    font-size: 1.125em;
+    font-weight: bold;
+    margin-top: 0;
+}
+h6 {
+    color: var(--canvas-accentcolor1);
+    font-size: 1em;
+}
+/* don't add color styles to hyperlinks */
+a { color: inherit; }

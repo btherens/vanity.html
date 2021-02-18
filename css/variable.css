@@ -1,0 +1,9 @@
+/* variables */
+:root {
+    /* theme colors */
+    --canvas-bgcolor: rgb(241, 241, 241);
+    --canvas-accentcolor1: rgb(0, 150, 136);
+    --canvas-footer-bgcolor: var(--canvas-accentcolor1);
+    /* the default scale of the interface */
+    --scale: 16px;
+}
