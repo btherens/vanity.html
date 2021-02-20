@@ -1,22 +1,22 @@
 <?php
 
-class LanguageModel extends Model
+class methodModel extends Model
 {
 
     /* table definition */
     protected static $_definition = [
         /* table name */
-        'name'   => 'language',
+        'name'   => 'method',
         /* limit the # of records to include in select query */
         'limit'  => 0,
         /* create and populate the table if it does not exist */
         'create' =>
-            "CREATE TABLE `language` (
+            "CREATE TABLE `method` (
                 `id`         int NOT NULL AUTO_INCREMENT,
                 `label`      varchar(255) DEFAULT NULL,
                 PRIMARY KEY  (`id`)
             ) ENGINE=InnoDB;;
-            INSERT INTO `language` ( `label` )
+            INSERT INTO `method` ( `label` )
             SELECT 'PHP' UNION
             SELECT 'JavaScript' UNION
             SELECT 'CSS' UNION
@@ -26,8 +26,8 @@ class LanguageModel extends Model
     /* constructor */
     public function __construct() { parent::__construct(); }
 
-    /* languages */
-    public function getLanguages(): array
+    /* methods */
+    public function getMethods(): array
     {
         /* initiate output object */
         $o = [];

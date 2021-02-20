@@ -13,7 +13,7 @@
                     <div class="container">
                             <?php echo $profile ?>
                             <?php echo $skill ?>
-                            <?php echo $language ?>
+                            <?php echo $method ?>
                         </div>
                     </div>
                 </div>

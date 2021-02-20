@@ -17,13 +17,14 @@ class CanvasController extends Controller
         /* create instances of other controllers here and render their view content*/
         $profile = new ProfileController();
         $this->_view->set( 'title', $profile->name() );
+        $this->_view->set( 'description', $profile->occupation() );
         $this->_view->set( 'profile', $profile->index() );
 
         $skill = new SkillController();
         $this->_view->set( 'skill', $skill->index() );
 
-        $language = new LanguageController();
-        $this->_view->set( 'language', $language->index() );
+        $method = new MethodController();
+        $this->_view->set( 'method', $method->index() );
 
         $work = new WorkController();
         $this->_view->set( 'work', $work->index() );
