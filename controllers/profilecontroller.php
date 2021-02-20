@@ -22,5 +22,7 @@ class ProfileController extends Controller
     }
     /* return the name from profile */
     public function name() { return $this->_model->getName(); }
+    /* return the occupation from profile */
+    public function occupation() { return $this->_model->getOccupation(); }
 
 }

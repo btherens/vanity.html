@@ -1,11 +1,11 @@
 <?php
 
-class LanguageController extends Controller
+class MethodController extends Controller
 {
 
     public function __construct( $action = 'index' )
     {
-        $model = 'Language';
+        $model = 'Method';
         parent::__construct( $model, $action );
         $this->_setView( $action );
         $this->_setModel( $model );
@@ -14,7 +14,7 @@ class LanguageController extends Controller
     public function index()
     {
         /* map model properties to view variables */
-        $this->_view->set( 'languages', $this->_model->getLanguages() );
+        $this->_view->set( 'methods', $this->_model->getMethods() );
         /* render view and return */
         return $this->_view->output();
     }
