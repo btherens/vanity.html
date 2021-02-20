@@ -4,7 +4,7 @@ vanity.html is a simple and lightweight profile website. The setup is intended t
 
 ## Screenshot
 
-![](https://briantherens.com/asset/demo.png)
+![](https://raw.githubusercontent.com/btherens/vanity.html/main/asset/demo.png)
 
 ## Compatibility
 | component | tested |
