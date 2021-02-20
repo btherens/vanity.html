@@ -2,6 +2,10 @@
 
 vanity.html is a simple and lightweight profile website. The setup is intended to represent a bare-bones mvc framework supporting a single page multi-view web application. Scripts and stylesheets are embedded with the html output.
 
+## Screenshot
+
+![](https://briantherens.com/asset/demo.png)
+
 ## Compatibility
 | component | tested |
 |----------|:-------------:|
