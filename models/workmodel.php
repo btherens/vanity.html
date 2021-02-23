@@ -33,8 +33,14 @@ class WorkModel extends Model
     /* works */
     public function getWorks(): array
     {
-        /* return entire result */
-        return $this->_getData();
+        /* create listmodel object to query  */
+        $list = New ListModel();
+        /* get data */
+        $o = $this->_getData();
+        /* get list values for each row */
+        foreach ( $o as $row ) { $row->list = $list->getList( 'w', $row->id ); }
+        /* return result */
+        return $o;
     }
 
 }

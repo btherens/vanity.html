@@ -90,14 +90,8 @@ class Model
             {
                 throw new Exception('invalid SQL statement: ' . $part);
             }
-            /* bind params if params are set
-             * only bind params on first command
-             */
-            if (($i == 0) && $this->_param)
-            {
-                call_user_func_array(array($stmt, 'bind_param'), $this->_param);
-            }
-
+            /* bind params if params are set */
+            if ( ( $i == 0 ) && $this->_param ) { call_user_func_array(array($stmt, 'bind_param'), $this->_param); }
             $stmt->execute();
         }
 
@@ -172,23 +166,41 @@ class Model
 
     /* SQL results managed here */
     private $_data;
+    /* SQL filters are set here and compared upon second get */
+    private $_filter;
     /* getter for data object */
-    protected function _getData(): array
+    protected function _getData( array $filter = null ): ?array
     {
-        if (!$this->_data)
+        /* if data is empty, or if we have data but with a different filter */
+        if ( !$this->_data || $this->_filter != $filter )
         {
             /* collect variables from child class */
             $def = &$this::$_definition;
             $n = &$def['name'];
             $l = &$def['limit'];
 
+            /* set empty "where" string, type, value */
+            $ws = ''; $wt = []; $wv = [];
+            /* create where string if we have a filter */
+            if ( $filter ) { foreach ( $filter as $k => $v )
+            {
+                /* append string */
+                $ws .= $ws ? ' AND ' : ' WHERE ';
+                $ws .= '`' . $k . '` = ?';
+                /* cast to value and do some limited type detection */
+                if ( is_numeric($v) ) { array_push( $wt, 'i' ); array_push( $wv, ( (int) $v ) ); } else { array_push( $wt, 's' ); array_push( $wv, $v  ); }
+            /* bind parameters to query */
+            } $this->setParam( $wv, $wt ); }
             /* set select query to property, LIMIT will only be applied if $l is truthy */
-            $this->setSql( 'SELECT * FROM `' . $n . '`' . ( $l ? ' LIMIT ' . $l : '' ) . ';' );
+            $this->setSql( 'SELECT * FROM `' . $n . '` ' . $ws . ( $l ? ' LIMIT ' . $l : '' ) . ';' );
+
             try   { $this->runQuery(); }
             /* if the query fails, pass to createTable method and then bail */
             catch ( Exception $e ) { $this->_createTable(); die; }
             /* save result to _data */
             $this->_data = $this->_result;
+            /* save filter to be checked against on subsequent lookups */
+            $this->_filter = $filter;
         }
         /* return property */
         return $this->_data;
