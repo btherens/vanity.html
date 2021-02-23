@@ -30,9 +30,9 @@ class ListModel extends Model
         /* initiate output object */
         $o = [];
         /* push each result into output object */
-        foreach ( $this->_getData() as $row ) { array_push( $o, $row->text ); };
+        foreach ( $this->_getData( [ 'type' => $t, 'fid' => $i ] ) as $r ) { array_push( $o, $r->text ); };
         /* return result */
-        return  $o;
+        return $o;
     }
 
 }

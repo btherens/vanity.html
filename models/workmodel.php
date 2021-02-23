@@ -35,12 +35,10 @@ class WorkModel extends Model
     {
         /* create listmodel object to query  */
         $list = New ListModel();
-        /* get data */
-        $o = $this->_getData();
-        /* get list values for each row */
-        foreach ( $o as $row ) { $row->list = $list->getList( 'w', $row->id ); }
+        /* link values from the list model to valid results */
+        $d = $this->_getData(); foreach ( $d as $r ) { $r->list = $list->getList( 'w', $r->id ); };
         /* return result */
-        return $o;
+        return $d;
     }
 
 }

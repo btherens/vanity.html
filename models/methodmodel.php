@@ -32,7 +32,7 @@ class methodModel extends Model
         /* initiate output object */
         $o = [];
         /* push each result into output object */
-        foreach ( $this->_getData() as $row ) { array_push( $o, $row->label ); };
+        foreach ( $this->_getData() as $r ) { array_push( $o, $r->label ); };
         /* return result */
         return  $o;
     }

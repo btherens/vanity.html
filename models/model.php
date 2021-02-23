@@ -165,11 +165,11 @@ class Model
     }
 
     /* SQL results managed here */
-    private $_data;
+    private array $_data = [];
     /* SQL filters are set here and compared upon second get */
     private $_filter;
     /* getter for data object */
-    protected function _getData( array $filter = null ): ?array
+    protected function _getData( array $filter = null ): array
     {
         /* if data is empty, or if we have data but with a different filter */
         if ( !$this->_data || $this->_filter != $filter )
@@ -198,7 +198,7 @@ class Model
             /* if the query fails, pass to createTable method and then bail */
             catch ( Exception $e ) { $this->_createTable(); die; }
             /* save result to _data */
-            $this->_data = $this->_result;
+            $this->_data = $this->_result ?: [];
             /* save filter to be checked against on subsequent lookups */
             $this->_filter = $filter;
         }
