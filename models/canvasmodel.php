@@ -14,8 +14,6 @@ class CanvasModel extends Model
     }
 
     /* get sourcecodeurl */
-    public function getSourceCodeUrl(): ?string {
-        return $this->_sourcecodeurl;
-    }
+    public function getSourceCodeUrl(): ?string { return $this->_sourcecodeurl; }
 
 }
