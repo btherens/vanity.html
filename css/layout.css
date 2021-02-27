@@ -24,7 +24,8 @@
 @media only screen and (min-width: 501px) { .canvas-footer p { font-size: 1em; } }
 
 .pad {
-    padding: 0.5rem;
+    /* extra padding on top to account for margins */
+    padding: 1em 0.5em 0.5em 0.5em;
     /* make sure floating children still fill */
     overflow: hidden;
 }

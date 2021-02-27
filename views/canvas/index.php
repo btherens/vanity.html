@@ -25,9 +25,7 @@
         </div>
         
         <div class="canvas-footer">
-            <p>
-                powered by vanity.html<?php if ( $sourcecodeurl ) { ?> | <a href="<?php echo $sourcecodeurl ?>">source code</a><?php } ?> | © <?php echo date('Y'); ?> <?php echo $title; ?>
-            </p>
+            <p>powered by <span style="font-weight: 700;">vanity.html</span><?php if ( $sourcecodeurl ) { ?> | <a href="<?php echo $sourcecodeurl ?>">source code</a><?php } ?> | © <?php echo date('Y'); ?> <?php echo $title; ?></p>
         </div>
     </body>
 
