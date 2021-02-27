@@ -1,12 +1,3 @@
-hr {
-    border: 0;
-    border-top: 1px solid #eee;
-    margin: 20px 0;
-    box-sizing: content-box;
-    height: 0;
-    overflow: visible;
-}
-
 /* page scale */
 
 html {
@@ -22,4 +13,16 @@ body {
     margin: 0;
     flex-direction: column;
     background-color: var(--canvas-bgcolor);
+}
+
+/* section breaks */
+hr {
+    /* null border widths */
+    border: 0;
+    /* null height */
+    height: 0;
+    /* set single pixel top border style */
+    border-top: 1px solid rgb(238, 238, 238);
+    /* edge to edge margin with space on top and bottom */
+    margin: 1.25em 0;
 }

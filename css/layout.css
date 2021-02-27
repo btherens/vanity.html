@@ -77,15 +77,24 @@
     margin: 0 0.18em 0 0;
 }
 
+/* custom header2 padding */
 .card h2 {
     padding-top: 16px;
     margin-top: 0;
 }
 
+/* spacing for divs */
 .card div {
     padding: 0 1rem;
 }
 
+/* icon placement in card */
+.card .icon {
+    padding-left: 0.18em;
+    padding-right: 1em;
+}
+
+/* highlight text with theme color */
 .highlight {
     color: #fff;
     background-color: var(--canvas-accentcolor1);
@@ -96,15 +105,45 @@
     text-align: center;
 }
 
-.panel {
-    padding: 0.01em 16px;
+/* panel spacing */
+.panel { padding: 0.01em 16px; }
+
+/* icon placement in panel */
+.panel .icon { margin-right: 1em; }
+
+/* formatting for progress bars */
+.progressbar {
+    /* fill space */
+    width: 100%;
+    /* empty progress bar shading */
+    background-color: var(--canvas-bgcolor);
+    /* curve corners */
+    border-radius: 1em;
 }
 
-.card .icon {
-    padding-left: 0.18em;
-    padding-right: 1em;
+.progressbar div {
+    /* progress bar height */
+    height: 0.7em;
+    /* inherit corner curve from parent */
+    border-radius: inherit;
+    /* the full progress bar color */
+    background-color: var(--canvas-accentcolor1);
 }
 
-.panel .icon {
-    margin-right: 1em;
+/* formatting for a combined text label with adjacent progress bar */
+.labelbar {
+    /* use grid layout for alignment */
+    display: grid;
+    /* grid width ratio */
+    grid-template-columns: 1fr 3fr;
+    /* gap between columns */
+    grid-gap: 1.25em;
+    /* set padding to top and bottom */
+    margin: 1em 0;
 }
+
+/* fit width to text length */
+.labelbar .label { width: fit-content; }
+
+/* align progress bar with text */
+.labelbar div { align-self: center; }
