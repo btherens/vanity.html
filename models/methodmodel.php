@@ -13,28 +13,21 @@ class methodModel extends Model
         'create' =>
             "CREATE TABLE `method` (
                 `id`         int NOT NULL AUTO_INCREMENT,
-                `label`      varchar(255) DEFAULT NULL,
+                `label`      varchar(255) NULL,
+                `aptitude`   decimal(2,2) NULL,
                 PRIMARY KEY  (`id`)
             ) ENGINE=InnoDB;;
-            INSERT INTO `method` ( `label` )
-            SELECT 'PHP' UNION
-            SELECT 'JavaScript' UNION
-            SELECT 'CSS' UNION
-            SELECT 'MySQL';"
+            INSERT INTO `method` ( `label`, `aptitude` )
+            SELECT 'PHP', .8 UNION
+            SELECT 'JavaScript', .55 UNION
+            SELECT 'CSS', .65 UNION
+            SELECT 'MySQL', .9;"
     ];
 
     /* constructor */
     public function __construct() { parent::__construct(); }
 
-    /* methods */
-    public function getMethods(): array
-    {
-        /* initiate output object */
-        $o = [];
-        /* push each result into output object */
-        foreach ( $this->_getData() as $r ) { array_push( $o, $r->label ); };
-        /* return result */
-        return  $o;
-    }
+    /* return list of methods */
+    public function getMethods(): array { return $this->_getData(); }
 
 }
