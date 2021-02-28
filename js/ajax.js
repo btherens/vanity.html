@@ -12,19 +12,16 @@ function appWebRequest(uri, params = null, ispost = false) {
         }
     }
 
-    /* generate params string if params exist */
+    /* add parameters to request if any were passed */
     if (params !== null) {
-        if (ispost) {
-            options.body = Object.keys(params).map(key => key + '=' + params[key]).join('&');
-        } else {
-            uri += '?' + new URLSearchParams(params);
-        }
+        /* add to body for post requests */
+        if (ispost) { options.body = Object.keys(params).map(key => key + '=' + params[key]).join('&') }
+        /* otherwise, add GET parameters to querystring */
+        else { uri += '?' + new URLSearchParams(params) }
     }
+    /* execute using fetch */
     return fetch(uri, options).then(function (response) {
-        if (response.ok) {
-            return response.json();
-        } else {
-            return Promise.reject('api request failed. ¯\_(ツ)_/¯');
-        }
+        /* validate server response before returning */
+        if (response.ok) { return response.json() } else { return Promise.reject('api request failed. ¯\_(ツ)_/¯') }
     });
 }
