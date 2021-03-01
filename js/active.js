@@ -7,6 +7,11 @@ var limiter = function () {
     }
 }();
 
+/* refresh all views to the latest data from server */
+var refreshViews = function () {
+	console.log('I ran');
+};
+
 /* remove all classes from an element that start with prefix */
 function removeClassByPrefix(el, prefix) {
     classes = el.className.split(' ').filter(c => !c.startsWith(prefix));
