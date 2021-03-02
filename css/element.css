@@ -22,7 +22,7 @@ hr {
     /* null height */
     height: 0;
     /* set single pixel top border style */
-    border-top: 1px solid rgb(238, 238, 238);
+    border-top: 1px solid var(--canvas-accentcolor2);
     /* edge to edge margin with space on top and bottom */
     margin: 1.25em 0;
 }
