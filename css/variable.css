@@ -5,7 +5,7 @@
     --canvas-bgcolor: rgb(241, 241, 241);
     --canvas-accentcolor1: rgb(0, 150, 136);
     --canvas-accentcolor2: rgb(225, 225, 225);
-    --canvas-footer-bgcolor: var(--canvas-accentcolor1);
+    --canvas-footer-bgcolor: rgb(0, 150, 136);
     --canvas-container-bgcolor: rgb(255, 255, 255);
     /* the default scale of the interface */
     --scale: 16px;
@@ -13,9 +13,10 @@
 
 /* dark mode variant */
 @media (prefers-color-scheme: dark) {:root {
-    --canvas-bgcolor: rgb(60, 60, 60);
-    --canvas-container-bgcolor: rgb(30, 30, 30);
     --canvas-fontcolor: rgb(234, 234, 234);
+    --canvas-bgcolor: rgb(57, 57, 57);
     --canvas-accentcolor1: rgb(0, 209, 188);
     --canvas-accentcolor2: rgb(100, 100, 100);
+    --canvas-footer-bgcolor: rgba(0, 209, 188, 0.6);
+    --canvas-container-bgcolor: rgb(30, 30, 30);
 } }
