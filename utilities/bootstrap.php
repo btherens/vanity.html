@@ -2,7 +2,10 @@
 /* default values */
 $controller = 'canvas';
 $action = 'index';
-$query = array( null );
+$query = [];
+
+/* whitelist for web (non-ajax) requests */
+$webroutes = [ 'canvas' ];
 
 /* override defaults if uri provided */
 if ( isset( $_GET['load'] ) )
@@ -10,19 +13,19 @@ if ( isset( $_GET['load'] ) )
     /* collect parameters from GET object */
     $params = array(); $params = explode( '/', $_GET['load'] );
     /* redirect default controller to base url */
-    if   ( $controller == strtolower( $params[0] ) ) { header('Location: ./'); exit; }
+    if   ( $controller == strtolower( $params[0] ) ) { header( 'Location: /' ); exit; }
     /* the first parameter from web request is the controller to use (default controller redirects to base url) */
     else { $controller = ucwords( $params[0] ); }
     /* set the second argument from GET to $action (the method being called) */
-    if ( isset( $params[1] ) && !empty( $params[1] ) ) { $action = $params[1]; }
+    if   ( isset( $params[1] ) && !empty( $params[1] ) ) { $action = $params[1]; }
     /* collect any remaining arguments from params in query object */
-    if ( isset( $params[2] ) && !empty( $params[2] ) ) { $query = array_slice( $params, 2 ); }
+    if   ( isset( $params[2] ) && !empty( $params[2] ) ) { $query = array_slice( $params, 2 ); }
 }
 
 /* determine if the request is AJAX */
 $isAjax = isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) ? ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ? true : false ) : false;
 /* controller whitelist for non-ajax requests */
-if ( !$isAjax && !in_array( $controller, [ 'canvas' ] ) ) { http_response_code(404); die( 'please check your url' ); };
+if ( !$isAjax && !in_array( $controller, $webroutes ) ) { header( 'Location: /' ); exit; };
 
 /* normalize request value to controller naming convention */
 $controller .= 'Controller';
