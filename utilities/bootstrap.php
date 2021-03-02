@@ -25,7 +25,7 @@ if ( isset( $_GET['load'] ) )
 /* determine if the request is AJAX */
 $isAjax = isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) ? ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ? true : false ) : false;
 /* controller whitelist for non-ajax requests */
-if ( !$isAjax && !in_array( $controller, $webroutes ) ) { http_response_code(404); header( 'Location: /' ); exit; };
+if ( !$isAjax && !in_array( $controller, $webroutes ) ) { header( 'Location: /' ); exit; };
 
 /* normalize request value to controller naming convention */
 $controller .= 'Controller';

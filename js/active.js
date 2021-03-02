@@ -8,9 +8,9 @@ var limiter = function () {
 }();
 
 /* refresh all views to the latest data from server */
-var refreshViews = function () {
-	console.log('I ran');
-};
+//var refreshView = async function () {
+//	console.log('I ran');
+//};
 
 /* remove all classes from an element that start with prefix */
 function removeClassByPrefix(el, prefix) {
