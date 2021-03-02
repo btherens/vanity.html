@@ -1,9 +1,19 @@
 /* variables */
 :root {
     /* theme colors */
+    --canvas-fontcolor: rgb(101, 101, 101);
     --canvas-bgcolor: rgb(241, 241, 241);
     --canvas-accentcolor1: rgb(0, 150, 136);
     --canvas-footer-bgcolor: var(--canvas-accentcolor1);
+    --canvas-container-bgcolor: rgb(255, 255, 255);
     /* the default scale of the interface */
     --scale: 16px;
 }
+
+/* dark mode variant */
+@media (prefers-color-scheme: dark) {:root {
+    --canvas-bgcolor: rgb(60, 60, 60);
+    --canvas-container-bgcolor: rgb(30, 30, 30);
+    --canvas-fontcolor: rgb(234, 234, 234);
+    --canvas-accentcolor1: rgb(0, 209, 188);
+} }

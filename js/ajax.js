@@ -1,30 +1,27 @@
-/* 
- * send web request to server
- * .then() will run when request succeeds
- * .catch() will run when request fails
- */
-function appWebRequest(uri, params = null, ispost = false) {
-    var options = {
-        method: ispost ? 'POST' : 'GET',
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'
+/* Invoke Web Request */
+class InvWeb {
+    /* handler with fetch API */
+    static async _request( url, params = null, method = 'GET' ) {
+        /* set request type and headers */
+        const options = { method, headers: { 'X-Requested-With': 'XMLHttpRequest', 'Content-Type': 'application/json' } };
+        /* attach parameters */
+        if ( params !== null ) {
+            /* cast to query string for GET requests */
+            if   ( method === 'GET' ) { url += '?' + new URLSearchParams( params ) }
+            /* send parameters in request body */
+            else { options.body = JSON.stringify( params ) }
         }
+        /* await the response */
+        const response = await fetch( url, options );
+        /* throw server errors */
+        if ( response.status !== 200 ) { throw Error( `server status code: ${response.status}` ) }
+        /* set response body to return variable */
+        const result = await response.json();
+        return result;
     }
-
-    /* generate params string if params exist */
-    if (params !== null) {
-        if (ispost) {
-            options.body = Object.keys(params).map(key => key + '=' + params[key]).join('&');
-        } else {
-            uri += '?' + new URLSearchParams(params);
-        }
-    }
-    return fetch(uri, options).then(function (response) {
-        if (response.ok) {
-            return response.json();
-        } else {
-            return Promise.reject('api request failed. ¯\_(ツ)_/¯');
-        }
-    });
+    /* PUBLIC METHODS */
+    static async GET(    url, params ) { return this._request( url, params ) }
+    static async POST(   url, params ) { return this._request( url, params, 'POST' ) }
+    static async PUT(    url, params ) { return this._request( url, params, 'PUT' ) }
+    static async DELETE( url, params ) { return this._request( url, params, 'DELETE' ) }
 }
