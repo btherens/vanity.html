@@ -66,6 +66,7 @@
     border-width: 0.20em;
     /* color settings */
     color: var(--canvas-accentcolor1);
+    background-color: var(--canvas-accentcolor1);
     opacity: 0.6;
     /* fill in color */
     border-style: solid;
