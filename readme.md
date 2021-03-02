@@ -3,14 +3,22 @@
 vanity.html is a simple and lightweight profile website. The setup is intended to represent a bare-bones mvc framework supporting a single page multi-view web application. Scripts and stylesheets are embedded with the html output.
 
 ## Screenshot
-
-![](https://raw.githubusercontent.com/btherens/vanity.html/main/asset/demo.png)
+<table style="width:100%">
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/btherens/vanity.html/main/asset/light-mode.png" ></td>
+    <td><img src="https://raw.githubusercontent.com/btherens/vanity.html/main/asset/dark-mode.png" ></td>
+  </tr>
+  <tr>
+    <td>light mode</td>
+    <td>dark mode</td>
+  </tr>
+</table>
 
 ## Compatibility
 | component | tested |
 |----------|:-------------:|
 | client   | Chromium and Webkit browsers |
-| server   | PHP 7.4, 8.0 |
+| server   | Apache/2.4.46 (Unix) <br> PHP 7.4, 8.0 |
 | database | MySQL 8.0.23, MariaDB 10.4.13 |
 
 ## Basic usage
@@ -23,7 +31,7 @@ CREATE DATABASE `vanitydb`;
 CREATE USER 'vanityphpaccess'@'localhost' identified by 'PASSWORD';  
 GRANT ALL PRIVILEGES ON vanitydb.* TO 'vanityphpaccess'@'localhost';  
 ```
-3. create a config.php document at the root of your checked out repo and fill in required variables (see sample in repository for details)
+3. create a config.php document at the root of your checked out repo and fill in required variables (see `~/config.php.sample` in repository for details)
 
 ## Files
 - config.php: **required variables for script execution (see sample)**
@@ -89,6 +97,9 @@ GRANT ALL PRIVILEGES ON vanitydb.* TO 'vanityphpaccess'@'localhost';
   - script.php: reference any necessary js libraries
   - style.php: reference any css libraries
 
+## notes
+unaffiliated content used in readme.md  
+>Moriareviews.com, 2021, www.moriareviews.com/rongulator/wp-content/uploads/Hobbit-1977-4.jpg. Accessed 2 Mar. 2021.
 
 ## License
 Copyright (C) 2021 Brian Therens
