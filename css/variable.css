@@ -4,6 +4,7 @@
     --canvas-fontcolor: rgb(101, 101, 101);
     --canvas-bgcolor: rgb(241, 241, 241);
     --canvas-accentcolor1: rgb(0, 150, 136);
+    --canvas-accentcolor2: rgb(225, 225, 225);
     --canvas-footer-bgcolor: var(--canvas-accentcolor1);
     --canvas-container-bgcolor: rgb(255, 255, 255);
     /* the default scale of the interface */
@@ -16,4 +17,5 @@
     --canvas-container-bgcolor: rgb(30, 30, 30);
     --canvas-fontcolor: rgb(234, 234, 234);
     --canvas-accentcolor1: rgb(0, 209, 188);
+    --canvas-accentcolor2: rgb(100, 100, 100);
 } }
