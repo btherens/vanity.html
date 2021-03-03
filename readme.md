@@ -24,7 +24,7 @@ vanity.html is a simple and lightweight profile website. The setup is intended t
 ## Basic usage
 
 1. checkout this repository to the root of your web host's public path.
-2. create the mysql database
+2. create the mysql database  
 connect to your MySQL environment using an account with enough access to provision new databases and users. example:
 ```
 CREATE DATABASE `vanitydb`;  
