@@ -108,7 +108,8 @@
 }
 
 /* panel spacing */
-.panel { padding: 0.01em 16px; }
+.panel { padding: 0.01em 1em; }
+.panel .panelrow { margin: 1em 0; }
 
 /* icon placement in panel */
 .panel .icon { margin-right: 1em; }
@@ -140,8 +141,6 @@
     grid-template-columns: 1fr 3fr;
     /* gap between columns */
     grid-gap: 1.25em;
-    /* set padding to top and bottom */
-    margin: 1em 0;
 }
 
 /* fit width to text length */
