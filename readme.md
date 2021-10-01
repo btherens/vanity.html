@@ -37,7 +37,7 @@ GRANT ALL PRIVILEGES ON vanitydb.* TO 'vanityphpaccess'@'localhost';
 - config.php: **required variables for script execution (see sample)**
 - .htaccess: server rules route requests to index.php
 - index.php: receive requests from web at this file (redirected here by .htaccess)
-- __utitilities__: MVC framework and other support classes
+- __utilities__: MVC framework and other support classes
   - bootstrap.php: route handling for MVC requests
   - bmail.php: simple class for sending email
   - db.php: static class for database connection
