@@ -9,7 +9,7 @@ class UInterface extends DomDocument
     private $_readonly = array('_group');
     public function __get(string $var)
     {
-        return (in_array($var, $this->_readonly) && isset($this->$var)) ? $this->$var : null;
+        return (in_array( $var, $this->_readonly ) && isset( $this->$var ) ) ? $this->$var : null;
     }
 
     private $_form;
@@ -20,9 +20,9 @@ class UInterface extends DomDocument
     private $_isactive;
 
     /* initial setup, set formatting preferences */
-    public function __construct(string $group)
+    public function __construct( string $group )
     {
-        parent::__construct('1.0', 'utf-8');
+        parent::__construct( '1.0', 'utf-8' );
         $this->formatOutput = true;
         $this->_group = $group;
 
@@ -36,62 +36,62 @@ class UInterface extends DomDocument
     }
 
     /* pass saveHTML to parent through html_entity_decode() -- currently disabled */
-    public function saveHTML($node = null)
+    public function saveHTML( $node = null )
     {
-        return parent::saveHTML($node);
+        return parent::saveHTML( $node );
         //return html_entity_decode(parent::saveHTML($node));
     }
 
     /* create form, save to _form property and add to object DOM */
-    public function _setForm(string $name = null, string $action = null): UIelement
+    public function _setForm( string $name = null, string $action = null ): UIelement
     {
         $frm = $this->createElement('form');
 
         $this->_form = &$frm;
 
-        $frm->setAttribute('name', $name ? $name : $this->_group);
+        $frm->setAttribute( 'name', $name ? $name : $this->_group );
 
-        $frm->setAttribute('id', $this->_group . '-frm');
-        $frm->setAttribute('action', isset($action) ? $action : '');
-        $frm->setAttribute('method', 'post');
-        $this->appendChild($frm);
+        $frm->setAttribute( 'id', $this->_group . '-frm' );
+        $frm->setAttribute( 'action', isset($action) ? $action : '' );
+        $frm->setAttribute( 'method', 'post' );
+        $this->appendChild( $frm );
         return $frm;
     }
 
-    public function _createTable(array $headers, bool $invisiblecolumn = false): UIelement
+    public function _createTable( array $headers, bool $invisiblecolumn = false ): UIelement
     {
-        $tbl = $this->createElement('table');
+        $tbl = $this->createElement( 'table' );
         $this->_table = &$tbl;
 
         /* set class style tags if invisible column needed */
         if ($invisiblecolumn)
         {
-            $tbl->_setClass('invisible-column');
+            $tbl->_setClass( 'invisible-column' );
         }
 
         /* add table headers */
-        $tbl->_setTableHeader($headers);
+        $tbl->_setTableHeader( $headers );
 
         /* add the table to the dom and return table variable */
-        $this->appendChild($tbl);
+        $this->appendChild( $tbl );
         return $tbl;
     }
 
     /* function to create and pass a button (not added to dom) */
-    public function createButton(string $key, $name, string $label, bool $submit = true): UIelement
+    public function createButton( string $key, $name, string $label, bool $submit = true ): UIelement
     {
         $group = &$this->_group;
         $id = $group . '-btn-' . $key;
 
-        $btn = $this->createElement('button');
+        $btn = $this->createElement( 'button' );
 
-        $btn->setAttribute('id', $id);
-        $btn->setAttribute('form', $this->_form->getAttribute('id'));
-        $btn->setAttribute('name', $name ? $group . '-' . $name : $group);
-        $btn->setAttribute('type', 'submit');
-        $btn->_setSubmit($submit);
-        $btn->setAttribute('value', $key);
-        $btn->appendChild($this->createElement('span', $label));
+        $btn->setAttribute( 'id', $id );
+        $btn->setAttribute( 'form', $this->_form->getAttribute( 'id' ) );
+        $btn->setAttribute( 'name', $name ? $group . '-' . $name : $group );
+        $btn->setAttribute( 'type', 'submit' );
+        $btn->_setSubmit( $submit );
+        $btn->setAttribute( 'value', $key );
+        $btn->appendChild( $this->createElement( 'span', $label ) );
 
         return $btn;
     }
@@ -113,14 +113,14 @@ class UInterface extends DomDocument
          * processing types
          * properly handle data in $valueObj
          */
-        if (!empty($valueObj))
+        if ( !empty( $valueObj ) )
         {
-            if (gettype($valueObj) == 'object')
+            if ( gettype( $valueObj ) == 'object' )
             {
-                if (get_class($valueObj) == 'ValidVar')
+                if ( get_class( $valueObj ) == 'ValidVar' )
                 {
                     /* if value exists, simply pass on to inherit type */
-                    if ($valueObj->value)
+                    if ( $valueObj->value )
                     {
                         $value = $valueObj->value;
                     }
@@ -128,7 +128,7 @@ class UInterface extends DomDocument
 
                     else
                     {
-                        switch ($valueObj->type)
+                        switch ( $valueObj->type )
                         {
                             case 'datetime-local':
                                 /* set vartype to datetime */
@@ -166,7 +166,7 @@ class UInterface extends DomDocument
          * switch statement handles by type
          */
         /* detect type if we haven't already */
-        $varTypestr = $varTypestr ?: gettype($value);
+        $varTypestr = $varTypestr ?: gettype( $value );
         if ($varTypestr == 'object')
         {
             if (get_class($value) == 'DateTime')

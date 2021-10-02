@@ -42,25 +42,25 @@ class Modal
         self::$_falseString = 'cancel';
     }
 
-    public static function build(string $title = null, string $prompt = null, string $trueBtnText = null, string $falseBtnText = null)
+    public static function build( string $title = null, string $prompt = null, string $trueBtnText = null, string $falseBtnText = null )
     {
         self::$_titleString = $title ? $title : self::$_titleString;
         self::$_promptString = $prompt ? $prompt : self::$_promptString;
         self::$_trueString = $trueBtnText ? $trueBtnText : self::$_trueString;
         self::$_falseString = $falseBtnText ? $falseBtnText : self::$_falseString;
 
-        if (self::$_titleString) {
-            self::$_html->appendChild(self::$_DOMbuilder->createElement('h2', self::$_titleString));
+        if ( self::$_titleString ) {
+            self::$_html->appendChild( self::$_DOMbuilder->createElement( 'h2', self::$_titleString ) );
         }
-        self::$_html->appendChild(self::$_DOMbuilder->createElement('div', self::$_promptString));
-        self::$_html->appendChild(self::$_DOMbuilder->createElement('br'));
+        self::$_html->appendChild( self::$_DOMbuilder->createElement( 'div', self::$_promptString ) );
+        self::$_html->appendChild( self::$_DOMbuilder->createElement( 'br' ) );
 
-        self::$_trueBtn = self::$_DOMbuilder->createButton('true', null, self::$_trueString, true);
-        self::$_falseBtn = self::$_DOMbuilder->createButton('false', null, self::$_falseString, false);
-        self::$_falseBtn->setAttribute('onclick', "modal_toggle(false);return false;");
+        self::$_trueBtn = self::$_DOMbuilder->createButton( 'true', null, self::$_trueString, true );
+        self::$_falseBtn = self::$_DOMbuilder->createButton( 'false', null, self::$_falseString, false );
+        self::$_falseBtn->setAttribute( 'onclick', "modal_toggle(false);return false;" );
 
-        self::$_html->appendChild(self::$_trueBtn);
-        self::$_html->appendChild(self::$_falseBtn);
+        self::$_html->appendChild( self::$_trueBtn );
+        self::$_html->appendChild( self::$_falseBtn );
 
         self::$_set = true;
     }

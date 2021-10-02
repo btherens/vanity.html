@@ -23,7 +23,7 @@ if ( isset( $_GET['load'] ) )
 }
 
 /* determine if the request is AJAX */
-$isAjax = isset( $_SERVER['HTTP_X_REQUESTED_WITH'] ) ? ( $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest' ? true : false ) : false;
+$isAjax = isset( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) ? ( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] == 'XMLHttpRequest' ? true : false ) : false;
 /* controller whitelist for non-ajax requests */
 if ( !$isAjax && !in_array( $controller, $webroutes ) ) { header( 'Location: /' ); exit; };
 
@@ -33,9 +33,9 @@ $controller .= 'Controller';
 /* load the class, if it exists */
 if   ( class_exists( $controller ) ) { $load = new $controller( $action ); }
 /* throw an error if it doesn't */
-else { http_response_code(404); die( 'please check your url' ); }
+else { http_response_code( 404 ); die( 'please check your url' ); }
 
 /* execute method and send to output buffer */
 if   ( method_exists( $load, $action ) ) { echo $load->$action( $query ); }
 /* throw an error if we couldn't find a method that matched request */
-else { http_response_code(404); die( 'Invalid method. Please check the URL.' ); }
+else { http_response_code( 404 ); die( 'Invalid method. Please check the URL.' ); }

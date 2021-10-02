@@ -18,13 +18,13 @@ class Db
                 /* check connection */
                 if (mysqli_connect_errno())
                 {
-                    die('Connection error: ' . mysqli_connect_error());
+                    die( 'Connection error: ' . mysqli_connect_error() );
                 }
-                self::$db->query("SET time_zone = '" . self::getTZoffset() . "';");
+                self::$db->query( "SET time_zone = '" . self::getTZoffset() . "';" );
             }
-            catch (Exception $e)
+            catch ( Exception $e )
             {
-                die('Connection error: ' . $e->getMessage());
+                die( 'Connection error: ' . $e->getMessage() );
             }
             self::$name = DB_NAME;
         }
@@ -33,15 +33,15 @@ class Db
 
     private static function getTZoffset()
     {
-        if (!self::$TZoffset)
+        if ( !self::$TZoffset )
         {
             $now = new DateTime();
             $mins = $now->getOffset() / 60;
-            $sgn = ($mins < 0 ? -1 : 1);
+            $sgn = ( $mins < 0 ? -1 : 1 );
             $mins = abs($mins);
-            $hrs = floor($mins / 60);
+            $hrs = floor( $mins / 60 );
             $mins -= $hrs * 60;
-            self::$TZoffset = sprintf('%+d:%02d', $hrs * $sgn, $mins);
+            self::$TZoffset = sprintf( '%+d:%02d', $hrs * $sgn, $mins );
         }
         return self::$TZoffset;
     }
