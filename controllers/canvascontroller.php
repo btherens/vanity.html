@@ -3,6 +3,7 @@
 class CanvasController extends Controller
 {
 
+    /* constructor */
     public function __construct( $action )
     {
         $model = 'Canvas';
