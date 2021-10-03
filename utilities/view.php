@@ -3,7 +3,7 @@
 class View
 {
     protected $_file;
-    protected $_data = array();
+    protected $_data = [];
 
     public function __construct( $file )
     {

@@ -11,7 +11,7 @@ $webroutes = [ 'canvas' ];
 if ( isset( $_GET['load'] ) )
 {
     /* collect parameters from GET object */
-    $params = array(); $params = explode( '/', $_GET['load'] );
+    $params = []; $params = explode( '/', $_GET['load'] );
     /* redirect default controller to base url */
     if   ( $controller == strtolower( $params[0] ) ) { header( 'Location: /' ); exit; }
     /* the first parameter from web request is the controller to use (default controller redirects to base url) */

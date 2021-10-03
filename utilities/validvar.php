@@ -56,7 +56,7 @@ class ValidVar
 
     public function __get( string $var )
     {
-        return (in_array( $var, array('value', 'pattern', 'type' ) ) && isset( $this->$var ) ) ? $this->$var : null;
+        return (in_array( $var, [ 'value', 'pattern', 'type' ] ) && isset( $this->$var ) ) ? $this->$var : null;
     }
 
     public function clear()
