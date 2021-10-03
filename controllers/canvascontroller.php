@@ -3,12 +3,13 @@
 class CanvasController extends Controller
 {
 
+    /* constructor */
     public function __construct( $action )
     {
         $model = 'Canvas';
         parent::__construct( $model, $action );
         $this->_setView( $action );
-        $this->_setModel($model);
+        $this->_setModel( $model );
     }
 
     /* route for single app system */

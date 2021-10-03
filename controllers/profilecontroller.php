@@ -28,20 +28,20 @@ class ProfileController extends Controller
     /*  */
     public function refresh()
     {
-        $timestamp = isset($_POST['t']) ? $_POST['t'] : null;
+        $timestamp = isset( $_POST['t'] ) ? $_POST[ 't' ] : null;
         if ( $timestamp )
         {
 
         }
 
-        $result = $this->_model->_checkKeyAvailability($type, $feedkey, $episodekey);
+        $result = $this->_model->_checkKeyAvailability( $type, $feedkey, $episodekey );
 
         $response = new stdClass();
-        $response->key = ($type == 'feed') ? $feedkey : $episodekey;
+        $response->key = ( $type == 'feed' ) ? $feedkey : $episodekey;
         $response->available = $result;
 
         $responseJSON = json_encode($response);
-        header("Content-type: application/json; charset=utf-8");
+        header( 'Content-type: application/json; charset=utf-8' );
         return $responseJSON;
     }
 
