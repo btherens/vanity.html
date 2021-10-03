@@ -49,7 +49,7 @@ label {
 .hgt-4 { height: 12em; }
 
 /* justify buttons inside forms to right by default */
-form button {float: right;}
+form button { float: right; }
 
 /* update-* states */
 
