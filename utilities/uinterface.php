@@ -7,10 +7,7 @@ class UInterface extends DomDocument
 
     /* read access to _group */
     private $_readonly = [ '_group' ];
-    public function __get(string $var)
-    {
-        return (in_array( $var, $this->_readonly ) && isset( $this->$var ) ) ? $this->$var : null;
-    }
+    public function __get( string $var ) { return ( in_array( $var, $this->_readonly ) && isset( $this->$var ) ) ? $this->$var : null; }
 
     private $_form;
 
