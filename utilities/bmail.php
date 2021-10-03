@@ -26,7 +26,7 @@ class bmail
 
     /* addressee */
     private $_to;
-    public function to(string $value)
+    public function to( string $value )
     {
         if ($value)
         {
@@ -36,7 +36,7 @@ class bmail
 
     /* the email's subject */
     private $_subject;
-    public function subject(string $value)
+    public function subject( string $value )
     {
         if ($value)
         {
@@ -44,7 +44,7 @@ class bmail
         }
     }
 
-    public function body(string $value)
+    public function body( string $value )
     {
         if ($value)
         {
@@ -54,7 +54,7 @@ class bmail
 
     public function send(): bool
     {
-        return mail($this->_to, $this->_subject, $this->_body, $this->_headers) ? true : false;
+        return mail( $this->_to, $this->_subject, $this->_body, $this->_headers ) ? true : false;
     }
 
 }
