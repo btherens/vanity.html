@@ -5,7 +5,7 @@ $action = 'index';
 $query = [];
 
 /* whitelist for web (non-ajax) requests */
-$webroutes = [ 'canvas', 'Webmanifest' ];
+$webroutes = [ 'canvas', 'Webmanifest', 'Pdf' ];
 
 /* override defaults if uri provided */
 if ( isset( $_GET['load'] ) )
