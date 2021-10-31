@@ -7,35 +7,65 @@ class PdfModel extends Model
     public function __construct() {
         parent::__construct();
     }
+    /* store website url here */
+    private string $_url;
+    /* properties loaded into memory here */
+    private array $_prop;
+
+
     /* renders a $url to pdf and return path */
-    private function renderPdf( $url ): string
+    private function renderPdf(): string
     {
-        $path = uniqid() . '.pdf';
-        $agent = 'internal-pdf-render';
         try
         {
+            /* establish basic command object */
+            $cmd = [ 'u' => $this->_url, 'd' => $this->basepath() . 'pdf' ];
+            /* add optional parameters if we were able to detect them */
+            if ( isset( $this->_prop[ 'title' ] ) ) { $cmd[ 't' ] = $this->_prop[ 'title' ]; }
+            if ( isset( $this->_prop[ 'description' ] ) ) { $cmd[ 's' ] = $this->_prop[ 'description' ]; }
+            /* establish command to shell */
+            $str = 'bash utilities/vanityPrint.sh';
+            /* cast parameters to string */
+            foreach( $cmd as $k => $v ) { $str = $str . ' -' . $k . ' $\'' . str_replace( '\'', '\\\'', $v ) . '\''; }
             /* run shell command */
-            shell_exec( "wkhtmltopdf -T 5 -L 5 -R 5 -B 5 --custom-header 'User-Agent' '" . $agent . "' --custom-header-propagation --zoom 0.9 localhost '" . $this->basepath() . $path . "'" );
-            //$path = shell_exec( 'utilities/vanityPrint.sh ' . $url . ' ' . $this->basepath() . 'pdf' );
+            $path = trim( shell_exec( $str ) );
         }
         /* if the query fails, pass to createTable method and then bail */
         catch ( Exception $e ) { http_response_code(400); echo 'errors encountered while rendering pdf'; header( 'Location: ./' ); exit; }
         return $path;
     }
 
+    private function loadHtml( $url )
+    {
+        /* use a DomDocument class for html processing */
+        $dom = new DOMDocument;
+        /* ignore libxml warnings */
+        libxml_use_internal_errors(true);
+        /* load the html */
+        $dom->loadHTMLFile( $url );
+        /* declare properties object */
+        $prop = [];
+        /* load meta tags */
+        foreach ( $dom->getElementsByTagName( 'meta' ) as $tag ) { $prop[ str_replace( 'og:', '', $tag->getAttribute( 'property' ) ) ] = $tag->getAttribute( 'content' ); }
+        /* set properties */
+        $this->_url = $url;
+        $this->_prop = $prop;
+    }
+
     /* render pdf and return */
     public function getPdf( $url )
-    {   
+    {
+        /* load html into file */
+        $this->loadHtml( $url ); 
         /* render pdf to file */
-        $path = $this->renderPdf( $url );
+        $path = $this->renderPdf();
         /* set proper document header */
         header( 'Content-type: application/pdf' );
+        header( 'Content-Disposition: inline; filename="' . trim( preg_replace( '/[^a-z0-9]+/', '-', strtolower( $url ) ), '-') . '"' );
         /* read pdf to output buffer */
-        try     { $this->getFile( $path ); }
+        try     { readfile( $path ); }
         /* throw exception and exit */
         catch   ( Exception $e ) { http_response_code(400); echo 'errors encountered while retrieving pdf'; header( 'Location: ./' ); exit; }
-        /* clean up temporary files */
-        // finally { $this->dropFile( $path ); }
     }
 
 }
