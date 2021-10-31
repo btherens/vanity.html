@@ -1,0 +1,17 @@
+/* padding and border are included in the total width and height of the elements */
+* {
+    box-sizing: border-box;
+}
+
+/* define 3 column layout */
+.col-1 { width: 33.33%; }
+.col-2 { width: 66.66%; }
+.col-3 { width: 100%; }
+
+
+/* rules for all column layouts */
+[class*="col-"] {
+    float: left;
+    padding: 0 8px;
+}
+
