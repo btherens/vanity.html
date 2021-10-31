@@ -10,3 +10,4 @@ RewriteRule ^(.*)$ index.php?load=$1 [PT,L,QSA]
 
 # protect config.php
 RewriteRule ^config.php?$ / [L,R,NC]
+RewriteRule ^utilities/(.*) / [L,R,NC]

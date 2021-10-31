@@ -19,6 +19,15 @@ class Model
     /* constructor - initiate db static class */
     public function __construct() { $this->_db = Db::init(); }
 
+    /* return the path used for document space */
+    protected function basepath(): string { return RESOURCEFILEPATH; }
+
+    /* get file from application path */
+    protected function getFile( string $name ): void { readfile( $this->basepath() . $name ); }
+
+    /* get file from application path */
+    protected function dropFile( string $name ): void { try { unlink( $this->basepath() . $name ); } catch ( Exception $e ) {  } }
+
     /* set _sql property */
     protected function setSql( string $sql, bool $usecache = false )
     {
