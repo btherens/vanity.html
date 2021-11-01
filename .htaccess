@@ -1,13 +1,24 @@
 RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule flags
+# QSA qsappend    append the new querystring to the current request instead of replacing it entirely
+# PT  Passthrough force redirection to be considered as URI instead of filepath
+# L   Last        do not process more rules if this one matches
+# R   Redirect    if this rule matches, redirect the browser to a new URL, otherwise new site will be served with current url
+# NC  Nocase      matches are case insensitive
 
+# continue if the request was a file that does not exist
+RewriteCond %{REQUEST_FILENAME} !-f
+# continue if the directory does not exist
+RewriteCond %{REQUEST_FILENAME} !-d
 # don't pass favicon.ico requests to application
 RewriteCond %{REQUEST_URI} !=/favicon.ico
-
 # route URI requests through index.php
-RewriteRule ^(.*)$ index.php?load=$1 [PT,L,QSA]
+RewriteRule ^(.*)$ index.php?load=$1 [L,PT,QSA]
 
+# hide some public paths
 # protect config.php
 RewriteRule ^config.php?$ / [L,R,NC]
+# protect utilities directory
 RewriteRule ^utilities/(.*) / [L,R,NC]
+# protect resource directory
+RewriteRule ^resource/(.*) / [L,R,NC]
