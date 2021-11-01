@@ -4,15 +4,20 @@
  * environment variables and definitions
  */
 
+/* REQUIRED VARIABLES */
 /* MySQL variables */
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'vanitydb');
-define('DB_USER', 'vanityphpaccess');
-define('DB_PASS', 'password123');
-define('APP_TIMEZONE','America/Chicago');
+define( 'DB_HOST', 'localhost' );
+define( 'DB_NAME', 'vanitydb' );
+define( 'DB_USER', 'vanityphpaccess' );
+define( 'DB_PASS', 'password123' );
+define( 'APP_TIMEZONE', 'America/Chicago' );
 
 /* BASEDNS: the URL to use when creating links */
-define('BASEDNS','http://itcorp.com/');
+define( 'BASEDNS', 'https://bilbobaggins.com/' );
 
+/* OPTIONAL VARIABLES */
 /* use this path for links to source code (leave blank to hide source code reference in footer) */
-define('SOURCECODEURL','');
+// define( 'SOURCECODEURL', 'www.github.com' );
+
+/* override the default r/w resource path (perhaps a non-www folder, dependant upon server access rights) */
+// define( 'RESOURCEFILEPATH', 'resource/' );
