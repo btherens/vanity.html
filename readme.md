@@ -31,6 +31,9 @@ CREATE DATABASE `vanitydb`;
 CREATE USER 'vanityphpaccess'@'localhost' identified by 'PASSWORD';  
 GRANT ALL PRIVILEGES ON vanitydb.* TO 'vanityphpaccess'@'localhost';  
 ```
+
+take note of your deployment requirements! Only use user host @'localhost' if your mysql instance can accept users provisioned to that host.
+
 3. create a config.php document at the root of your checked out repo and fill in required variables (see `~/config.php.sample` in repository for details)
 
 ## Files

@@ -16,7 +16,7 @@ define( 'APP_TIMEZONE', 'America/Chicago' );
 define( 'BASEDNS', 'https://bilbobaggins.com/' );
 
 /* OPTIONAL VARIABLES */
-/* use this path for links to source code (leave blank to hide source code reference in footer) */
+/* use this path for links to source code (leave commented out / null to hide source code reference in footer) */
 // define( 'SOURCECODEURL', 'www.github.com' );
 
 /* override the default r/w resource path (perhaps a non-www folder, dependant upon server access rights) */
