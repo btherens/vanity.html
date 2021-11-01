@@ -3,14 +3,14 @@
 class CanvasModel extends Model
 {
 
-    private string $_sourcecodeurl;
+    private ?string $_sourcecodeurl;
 
     /* constructor */
     public function __construct() {
         /* use parent constructor */
         parent::__construct();
         /* save sourcecode url to model if one is defined */
-        $this->_sourcecodeurl = SOURCECODEURL;
+        $this->_sourcecodeurl = defined( 'SOURCECODEURL' ) ? SOURCECODEURL : null;
     }
 
     /* get sourcecodeurl */

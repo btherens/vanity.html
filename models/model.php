@@ -9,6 +9,8 @@ class Model
     /* array of parameters */
     private $_param;
 
+    private string $_basepath;
+
     /* the insert_id returned by mysql query */
     private $_insert_id;
     /* insert_id getter */
@@ -17,10 +19,15 @@ class Model
     protected $_result;
 
     /* constructor - initiate db static class */
-    public function __construct() { $this->_db = Db::init(); }
+    public function __construct()
+    {
+        $this->_db = Db::init();
+        /* assign default / override basepath */
+        $this->_basepath = defined( 'RESOURCEFILEPATH' ) ? RESOURCEFILEPATH : 'resource/';
+    }
 
     /* return the path used for document space */
-    protected function basepath(): string { return RESOURCEFILEPATH; }
+    protected function basepath(): string { return $this->_basepath; }
 
     /* get file from application path */
     protected function getFile( string $name ): void { readfile( $this->basepath() . $name ); }
