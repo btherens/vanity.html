@@ -27,12 +27,10 @@ if [ -z "$CREATOR" ]; then CREATOR='vanity.html'; fi;
 function htmltopdf() {
     # url to render
     local URL=$1;
-    # where to save
-    local DIR=$2;
     # generate filename
     local PATH="$2/$( uuidgen ).pdf";
-    # render pdf
-    wkhtmltopdf -T 5 -L 5 -R 5 -B 5 --custom-header 'User-Agent' 'internal-pdf-render' --custom-header-propagation --zoom 0.9 $URL $PATH &>/dev/null;
+    # render pdf and fail critically upon exception
+    /usr/local/bin/wkhtmltopdf -T 5 -L 5 -R 5 -B 5 --custom-header 'User-Agent' 'internal-pdf-render' --custom-header-propagation --zoom 0.9 $URL $PATH &>/dev/null || { echo 'error: wkhtml exceptions!'; exit 1; };
     # return saved filepath
     echo $PATH;
 }
@@ -45,7 +43,7 @@ function setPdfProp() {
     local SUBJECT=$3;
     local CREATOR=$4;
     # execute pdf property update
-    exiftool \
+    /usr/local/bin/exiftool \
         -z -P \
         -XMP:Format="application/pdf" \
         -Title="$TITLE" \
@@ -54,17 +52,17 @@ function setPdfProp() {
         -PDF:Creator="$CREATOR" -XMP:CreatorTool="$CREATOR" \
         -Producer="$CREATOR" \
         -overwrite_original_in_place "$PATH" \
-    &>/dev/null;
+    &>/dev/null || { echo 'error: exiftool exceptions!'; exit 1; };
     # return path
     echo $PATH;
 }
 
 # create the directory if it does not exist
-[ ! -d $DIR ] && mkdir –p $DIR;
+mkdir -p $DIR &>/dev/null;
 # clean up old files first
-find $DIR/*.pdf -type f -mmin +10 -maxdepth 1 | xargs rm 2>/dev/null;
+find $DIR/*.pdf -type f -mmin +10 -maxdepth 1 2>/dev/null | xargs rm;
 # get an existing pdf created in the last 1 minute
-FILE=$( find $DIR/*.pdf -type f -mmin -1 -maxdepth 1 | grep -m1 . 2>/dev/null );
+FILE=$( find $DIR/*.pdf -type f -mmin -1 -maxdepth 1 2>/dev/null | grep -m1 . );
 # make new pdf if necessary
 if [ -z "$FILE" ]; then FILE=$( setPdfProp "$( htmltopdf $URL $DIR )" "$TITLE" "$SUBJECT" "$CREATOR" ); fi;
 # return file result
