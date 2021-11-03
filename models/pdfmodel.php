@@ -14,23 +14,17 @@ class PdfModel extends Model
     /* renders a $url to pdf and return path */
     private function renderPdf(): string
     {
-        try
-        {
-            /* establish basic command object */
-            $cmd = [ 'u' => $this->_url, 'd' => $this->basepath() . 'pdf' ];
-            /* add optional parameters if we were able to detect them */
-            if ( isset( $this->_prop[ 'title' ] ) ) { $cmd[ 't' ] = $this->_prop[ 'title' ]; }
-            if ( isset( $this->_prop[ 'description' ] ) ) { $cmd[ 's' ] = $this->_prop[ 'description' ]; }
-            /* call shell function */
-            $str = 'bash utilities/vanityPrint.sh';
-            /* cast parameters to string */
-            foreach( $cmd as $k => $v ) { $str = $str . ' -' . $k . ' $\'' . str_replace( '\'', '\\\'', $v ) . '\''; }
-            /* run shell command */
-            $path = trim( shell_exec( $str ) );
-        }
-        /* if the query fails, pass to createTable method and then bail */
+        /* establish basic command object */
+        $cmd = [ 'u' => $this->_url, 'd' => $this->basepath() . 'pdf' ];
+        /* add optional parameters if we were able to detect them */
+        if    ( isset( $this->_prop[ 'title' ] ) ) { $cmd[ 't' ] = $this->_prop[ 'title' ]; }
+        if    ( isset( $this->_prop[ 'description' ] ) ) { $cmd[ 's' ] = $this->_prop[ 'description' ]; }
+        /* call shell function */
+        try   { $result = $this->_shellExec( 'utilities/vanityPrint.sh', $cmd ); }
+        /* throw exceptions if pdf execution failed */
         catch ( Exception $e ) { http_response_code( 400 ); echo 'errors encountered while rendering pdf'; header( 'Location: ./' ); exit; }
-        return $path;
+        /* return last returned value from shell */
+        return end( $result );
     }
 
     private function loadHtml( $url ): void
