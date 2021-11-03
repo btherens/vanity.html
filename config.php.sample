@@ -12,8 +12,8 @@ define( 'DB_USER', 'vanityphpaccess' );
 define( 'DB_PASS', 'password123' );
 define( 'APP_TIMEZONE', 'America/Chicago' );
 
-/* BASEDNS: the URL to use when creating links */
-define( 'BASEDNS', 'https://bilbobaggins.com/' );
+/* BASEDNS: the URL to use when creating self links */
+define( 'BASEDNS', 'http://www.google.com/' );
 
 /* OPTIONAL VARIABLES */
 /* use this path for links to source code (leave commented out / null to hide source code reference in footer) */
