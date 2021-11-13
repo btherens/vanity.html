@@ -27,6 +27,7 @@ class PdfModel extends Model
         return end( $result );
     }
 
+    /* load properties from an html page */
     private function loadHtml( $url ): void
     {
         /* use a DomDocument class for html processing */

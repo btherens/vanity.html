@@ -5,7 +5,7 @@ $action = 'index';
 $query = [];
 
 /* whitelist for web (non-ajax) requests */
-$webroutes = [ 'canvas', 'Webmanifest', 'Pdf' ];
+$webroutes = [ 'canvas', 'webmanifest', 'pdf' ];
 
 /* override defaults if uri provided */
 if ( isset( $_GET['load'] ) )
@@ -24,8 +24,8 @@ if ( isset( $_GET['load'] ) )
 
 /* determine if the request is AJAX */
 $isAjax = isset( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) ? ( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] == 'XMLHttpRequest' ? true : false ) : false;
-/* controller whitelist for non-ajax requests */
-if ( !$isAjax && !in_array( $controller, $webroutes ) ) { header( 'Location: /' ); exit; };
+/* redirect to homepage if the request wasn't in whitelist array */
+if ( !$isAjax && !in_array( strtolower( $controller ), $webroutes ) ) { header( 'Location: /' ); exit; };
 
 /* normalize request value to controller naming convention */
 $controller .= 'Controller';
