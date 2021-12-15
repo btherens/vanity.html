@@ -66,7 +66,7 @@ class Model
     /* run the query staged in _sql and _param properties. response is saved to _result property */
     protected function runQuery()
     {
-        $this->_result = $this->getResult( $this->executeSql() );
+        $this->_result = $this->executeSql();
         $this->clearQuery();
     }
 
@@ -107,17 +107,15 @@ class Model
             if ( ( $i == 0 ) && $this->_param ) { call_user_func_array( [ $stmt, 'bind_param' ], $this->_param ); }
             $stmt->execute();
         }
-
-        /* commit */
-        $this->_db->commit();
-
         /* make insert_id accessible via insert_id() */
         $this->_insert_id = $stmt->insert_id;
+        /* process results */
+        $result = $this->getResult( $stmt );
+        /* commit statements if we've reached this point */
+        $this->_db->commit();
 
-        return $stmt;
+        return $result;
     }
-
-
 
     /* Processes the executed msqli object, returning a row of data,           */
     /* an array of rows of data, or true/false if affected row response exists */
@@ -125,29 +123,20 @@ class Model
     {
         /* get results, read into results[] and return */
         $result = $stmt->get_result();
-        if ($result)
+        /* check for a result and cast rows to array */
+        if ( $result )
         {
-            $results = null;
-            while ($row = $result->fetch_object())
-            {
-                $results[] = $row;
-            }
+            $results = null; 
+            /* save each row we find to a new array */
+            while ( $row = $result->fetch_object() ) { $results[] = $row; }
             return $results;
         }
         /* otherwise, check for successful insertion using affected rows
          * make sure affected_rows is not -1 (insert error)
          */
-
-        elseif ( $stmt->affected_rows && $stmt->affected_rows != -1 )
-        {
-            return true;
-        }
+        elseif ( $stmt->affected_rows && $stmt->affected_rows != -1 ) { return true; }
         /* finally, return $false */
-
-        else
-        {
-            return false;
-        };
+        else   { return false; }
     }
 
     /* attempt to create table using a class' static $_definition property */
