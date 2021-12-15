@@ -1,8 +1,11 @@
 <?php
 /* define some simple properties to use when referencing files */
+/* os-specific path separator */
 define( 'DS', DIRECTORY_SEPARATOR );
+/* the working directory for this site */
 define( 'HOME', dirname( __FILE__ ) );
-session_start();
+/* create session cookie (disabled) */
+// session_start();
 
 /* includes necessary script files by object name, on demand and only if class has not already been loaded */
 function basic_autoload( $class )
