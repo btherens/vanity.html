@@ -8,18 +8,18 @@ $query = [];
 $webroutes = [ 'canvas', 'webmanifest', 'pdf' ];
 
 /* override defaults if uri provided */
-if ( isset( $_GET['load'] ) )
+if ( isset( $_GET[ 'load' ] ) )
 {
     /* collect parameters from GET object */
-    $params = []; $params = explode( '/', $_GET['load'] );
+    $params = []; $params = explode( '/', $_GET[ 'load' ] );
     /* redirect default controller to base url */
-    if   ( $controller == strtolower( $params[0] ) ) { header( 'Location: /' ); exit; }
+    if   ( $controller == strtolower( $params[ 0 ] ) ) { header( 'Location: /' ); exit; }
     /* the first parameter from web request is the controller to use (default controller redirects to base url) */
-    else { $controller = ucwords( $params[0] ); }
+    else { $controller = ucwords( $params[ 0 ] ); }
     /* set the second argument from GET to $action (the method being called) */
-    if   ( isset( $params[1] ) && !empty( $params[1] ) ) { $action = $params[1]; }
+    if   ( isset( $params[ 1 ] ) && !empty( $params[ 1 ] ) ) { $action = $params[ 1 ]; }
     /* collect any remaining arguments from params in query object */
-    if   ( isset( $params[2] ) && !empty( $params[2] ) ) { $query = array_slice( $params, 2 ); }
+    if   ( isset( $params[ 2 ] ) && !empty( $params[ 2 ] ) ) { $query = array_slice( $params, 2 ); }
 }
 
 /* determine if the request is AJAX */
