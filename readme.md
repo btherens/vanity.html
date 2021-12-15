@@ -18,7 +18,7 @@ vanity.html is a simple and lightweight profile website. The setup is intended t
 | component | tested |
 |----------|:-------------:|
 | client   | Chromium and Webkit browsers |
-| server   | Apache/2.4.46 (Unix) <br> PHP 7.4, 8.0 |
+| server   | Apache/2.4.46 (Unix) <br> PHP 7.4, 8.0, 8.1 |
 | database | MySQL 8.0.23, MariaDB 10.4.13 |
 
 ## Basic usage
