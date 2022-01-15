@@ -24,6 +24,9 @@ done
 [ -z "$AGENT" ] && AGENT='internal-pdf-render';
 [ -z "$CREATOR" ] && CREATOR='vanity.html';
 
+# test for binaries and fail critically if we need to
+for i in 'wkhtmltopdf' 'exiftool'; do command -v $i >/dev/null 2>&1 || { echo "$i required but not found! failing critically..."; exit 1; }; done;
+
 # renderPdf - render a url and save a randomly named file to the given directory
 function renderPdf() {
     # url to render
