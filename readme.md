@@ -27,9 +27,14 @@ vanity.html is a simple and lightweight profile website. The setup is intended t
 2. create the mysql database  
 connect to your MySQL environment using an account with enough access to provision new databases and users. example:
 ```
+/* create the database */
 CREATE DATABASE `vanitydb`;  
+/* create the new user (replace PASSWORD) */  
 CREATE USER 'vanityphpaccess'@'localhost' identified by 'PASSWORD';  
+/* give access to this specific database only */  
 GRANT ALL PRIVILEGES ON vanitydb.* TO 'vanityphpaccess'@'localhost';  
+/* reload access tables */  
+FLUSH PRIVILEGES;  
 ```
 
 take note of your deployment requirements! Only use user host @'localhost' if your mysql instance can accept users provisioned to that host.
@@ -49,6 +54,7 @@ take note of your deployment requirements! Only use user host @'localhost' if yo
   - startup.php: startup commands to be run before routes are called
   - uinterface.php: simple classes that extend DOMDocument objects with more complex definitions. rich interaction with validvar objects
   - validvar.php: class designed to sit between model and controller and handle data validation and sanitization
+  - vanityPrint.sh: shell script to render web page, using wkhtmltopdf for rendering and exiftool for properties
   - view.php: view methods
 - __asset__: vector and images required for site operation
   - avatar.jpg: image will be featured in the profile sidebar (bring your own!)
