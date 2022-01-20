@@ -101,7 +101,7 @@ then
     # create temporary file
     TMPPATH=$( mktemp );
     # be sure to delete what remains when exiting
-    trap 'rm -f $TMPPATH;' EXIT;
+    trap "rm -f $TMPPATH;" EXIT;
     # create a pdf, set properties, and save to final path $FILE
     FILE=$( setPdfCache $( setPdfProp "$( renderPdf $URL $TMPPATH $AGENT )" "$TITLE" "$SUBJECT" "$CREATOR" ) $DIR ) || { echo "errors encounters when creating new pdf!"; exit 1; }
 fi;
