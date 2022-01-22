@@ -22,6 +22,8 @@
 .canvas-footer p { font-size: 3vw; }
 /* override footer font size on wider layouts */
 @media only screen and (min-width: 501px) { .canvas-footer p { font-size: 1em; } }
+/* help footer anchor to bottom in print layout */
+@media only print { .canvas-footer { position: fixed; bottom: 0; width: 100%; } }
 
 .pad {
     /* extra padding on top to account for margins */
@@ -78,6 +80,9 @@
     /* spacing to the right of bullet */
     margin: 0 0.18em 0 0;
 }
+
+/* override bullet opacity in print mode */
+@media only print { .card li::before { opacity: 1; } }
 
 /* custom header2 padding */
 .card h2 {

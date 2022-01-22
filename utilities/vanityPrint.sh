@@ -38,7 +38,7 @@ function renderPdf() {
     # delete destination if it exists
     rm -f $2 &>/dev/null;
     # render pdf and fail critically upon exception
-    wkhtmltopdf -T 5 -L 5 -R 5 -B 5 --custom-header 'User-Agent' "$AGENT" --custom-header-propagation --zoom 0.9 $URL $PDF &>/dev/null || { echo 'error: wkhtml exceptions!'; return 1; };
+    wkhtmltopdf -T 0 -L 0 -R 0 -B 0 --print-media-type --custom-header 'User-Agent' "$AGENT" --custom-header-propagation --zoom 0.9 $URL $PDF &>/dev/null || { echo 'error: wkhtml exceptions!'; return 1; };
     # return saved filepath and exit
     echo $PDF && return 0;
 }
