@@ -24,6 +24,9 @@ done
 [ -z "$AGENT" ] && AGENT='internal-pdf-render';
 [ -z "$CREATOR" ] && CREATOR='vanity.html';
 
+# test for binaries and fail critically if we need to
+for i in 'wkhtmltopdf' 'exiftool'; do command -v $i >/dev/null 2>&1 || { echo "$i required but not found! failing critically..."; exit 1; }; done;
+
 # renderPdf - render a url and save a randomly named file to the given directory
 function renderPdf() {
     # url to render
@@ -35,7 +38,7 @@ function renderPdf() {
     # delete destination if it exists
     rm -f $2 &>/dev/null;
     # render pdf and fail critically upon exception
-    wkhtmltopdf -T 5 -L 5 -R 5 -B 5 --custom-header 'User-Agent' "$AGENT" --custom-header-propagation --zoom 0.9 $URL $PDF &>/dev/null || { echo 'error: wkhtml exceptions!'; return 1; };
+    wkhtmltopdf -T 0 -L 0 -R 0 -B 0 --print-media-type --custom-header 'User-Agent' "$AGENT" --custom-header-propagation $URL $PDF &>/dev/null || { echo 'error: wkhtml exceptions!'; return 1; };
     # return saved filepath and exit
     echo $PDF && return 0;
 }
@@ -98,7 +101,7 @@ then
     # create temporary file
     TMPPATH=$( mktemp );
     # be sure to delete what remains when exiting
-    trap 'rm -f $TMPPATH;' EXIT;
+    trap "rm -f $TMPPATH;" EXIT;
     # create a pdf, set properties, and save to final path $FILE
     FILE=$( setPdfCache $( setPdfProp "$( renderPdf $URL $TMPPATH $AGENT )" "$TITLE" "$SUBJECT" "$CREATOR" ) $DIR ) || { echo "errors encounters when creating new pdf!"; exit 1; }
 fi;
