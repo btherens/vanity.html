@@ -11,6 +11,8 @@
             <div class="pad">
                 <div class="col-1">
                     <div class="container">
+                        <img src="/asset/avatar.jpg" >
+                        <div class="panel">
                             <?php echo $profile ?>
                             <?php echo $skill ?>
                             <?php echo $method ?>

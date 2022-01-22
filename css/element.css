@@ -1,28 +1,21 @@
 /* page scale */
-
-html {
-    font-size: var(--scale);
-}
-
-html, body {
-    height: 100%;
-}
-
+html { font-size: var(--scale); }
+/* fill window (help ensure footer is on the bottom) */
+html, body { height: 100%; }
+/* global page styles */
 body {
+    /* ensure page expands to height and width we need */
     display: flex;
+    /* set page margins to 0 */
     margin: 0;
+    /* expand flexbox along columns */
     flex-direction: column;
+    /* main page background */
     background-color: var(--canvas-bgcolor);
 }
 
-/* section breaks */
-hr {
-    /* null border widths */
-    border: 0;
-    /* null height */
-    height: 0;
-    /* set single pixel top border style */
-    border-top: 1px solid var(--canvas-accentcolor2);
-    /* edge to edge margin with space on top and bottom */
-    margin: 1.25em 0;
-}
+/* zoom layout to 90% for print media */
+@media only print { body { zoom: 90%; } }
+/* set printer page margins to 0 */
+@page { margin: 0mm; }
+
