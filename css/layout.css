@@ -1,7 +1,5 @@
 /* the page background behind all elements */
-
 /* the main space excluding footer */
-
 .canvas-main {
     flex: 1 0 auto;
     max-width: 1400px;
@@ -9,7 +7,7 @@
     margin-right: auto;
     color: var(--canvas-fontcolor);
 }
-
+/* footer styles */
 .canvas-footer {
     flex-shrink: 0;
     color: #fff;
@@ -24,6 +22,18 @@
 @media only screen and (min-width: 501px) { .canvas-footer p { font-size: 1em; } }
 /* help footer anchor to bottom in print layout */
 @media only print { .canvas-footer { position: fixed; bottom: 0; width: 100%; } }
+
+/* section breaks */
+hr {
+    /* null border widths */
+    border: 0;
+    /* null height */
+    height: 0;
+    /* set single pixel top border style */
+    border-top: 1px solid var(--canvas-accentcolor2);
+    /* edge to edge margin with space on top and bottom */
+    margin: 1.25em 0;
+}
 
 .pad {
     /* extra padding on top to account for margins */
@@ -113,7 +123,7 @@
 }
 
 /* panel spacing */
-.panel { padding: 0.01em 1em; }
+.panel { padding: 0em 1em 1em 1em; }
 .panel .panelrow { margin: 1em 0; }
 
 /* icon placement in panel */
