@@ -23,6 +23,11 @@
 /* help footer anchor to bottom in print layout */
 @media only print { .canvas-footer { position: fixed; bottom: 0; width: 100%; } }
 
+/* hide elements meant only for printing */
+.print-show { display: none; }
+/* show print elements meant for printing and hide elements meant to be excluded */
+@media only print { .print-show { display: inline; } .print-hide { display: none; } }
+
 /* section breaks */
 hr {
     /* null border widths */
