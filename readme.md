@@ -53,7 +53,7 @@ take note of your deployment requirements! Only use user host @'localhost' if yo
   - modal.php: static class for sending modal dialogs to client
   - startup.php: startup commands to be run before routes are called
   - uinterface.php: simple classes that extend DOMDocument objects with more complex definitions. rich interaction with validvar objects
-  - validvar.php: class designed to sit between model and controller and handle data validation and sanitization
+  - uivar.php: class designed to sit between model and controller and handle data validation and sanitization
   - vanityPrint.sh: shell script to render web page, using wkhtmltopdf for rendering and exiftool for properties
   - view.php: view methods
 - __asset__: vector and images required for site operation
