@@ -2,7 +2,7 @@
     <?php
         /* detect internal rendering requests to serve alternate styles */
         $printmode = (bool) ISSET( $_SERVER[ 'HTTP_USER_AGENT' ] ) ? ( $_SERVER[ 'HTTP_USER_AGENT' ] == 'internal-pdf-render' ) : false;
-        $printmode = true;
+
         /* evaluate CSS variables for print server to support older browsing engine */
         function evalCssVars( string $buffer ): string
         {
