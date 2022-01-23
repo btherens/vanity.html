@@ -2,6 +2,8 @@
 
 vanity.html is a simple and lightweight profile website. The setup is intended to represent a bare-bones mvc framework supporting a single page multi-view web application. Scripts and stylesheets are embedded with the html output.
 
+visit `/pdf` path of the website for a PDF version of the page.
+
 ## Screenshot
 <table style="width:100%">
   <tr>
@@ -39,7 +41,8 @@ FLUSH PRIVILEGES;
 
 take note of your deployment requirements! Only use user host @'localhost' if your mysql instance can accept users provisioned to that host.
 
-3. create a config.php document at the root of your checked out repo and fill in required variables (see `~/config.php.sample` in repository for details)
+3. create a config.php document at the root of your checked out repo and fill in required variables (see `~/config.php.sample` in repository for details)  
+4. exiftool and wkhtmltopdf binaries are required for pdf printing at yoururl/pdf
 
 ## Files
 - config.php: **required variables for script execution (see sample)**
@@ -104,7 +107,7 @@ take note of your deployment requirements! Only use user host @'localhost' if yo
 - __includes__: simple reference files that link client-side libraries together (html/js/css)
   - head.php: the head element of html response. includes site metadata
   - script.php: reference any necessary js libraries
-  - style.php: reference any css libraries
+  - style.php: reference any css libraries. altered css is served to pdf printer to ensure color variables are properly used
 
 ## notes
 unaffiliated content used in readme.md  
