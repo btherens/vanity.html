@@ -9,15 +9,15 @@
             $matches = [];
             /* get variable definitions */
             $cssVars = preg_match_all( '/^\s*(--\S+):\s*(.+);\s*$/m', $buffer, $matches );
-            /* convert key into regex match pattern */
-            function evalPregPat( &$str ) { $str = '/(?<=:\s)var\(' . preg_quote( $str ) . '\)(?=\s*;)/'; }
-            /* step through each record in array and convert to regex pattern using evalPregPat */
-            array_walk( $matches[ 1 ], 'evalPregPat' );
+            /* step through each record in array and convert to regex pattern using generatePattern */
+            function generatePattern( &$str ) { $str = '/(:[^:;\n]*)(var\(' . preg_quote( $str ) . '\))/'; }; array_walk( $matches[ 1 ], 'generatePattern' );
+            /* ensure first match group remains where it was by prepending ${1} to replace text */
+            function generateReplace( &$str ) { $str = '${1}' . $str; }; array_walk( $matches[ 2 ], 'generateReplace' );
 
             /* replace each var() with the css variable's true value */
             $newbuffer = preg_replace( $matches[1], $matches[2], $buffer );
-            /* return buffer after alteration is complete */
-            return $newbuffer;
+            /* return buffer through text replacement so that css variables are replaced with their values */
+            return preg_replace( $matches[1], $matches[2], $buffer );
         }
         /* catch included css files in buffer and postprocess with evalCssVars */
         if ( $printmode ) { ob_start( 'evalCssVars' ); }
