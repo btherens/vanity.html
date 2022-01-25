@@ -19,6 +19,8 @@ class PdfModel extends Model
         /* add optional parameters if we were able to detect them */
         if    ( isset( $this->_prop[ 'title' ] ) ) { $cmd[ 't' ] = $this->_prop[ 'title' ]; }
         if    ( isset( $this->_prop[ 'description' ] ) ) { $cmd[ 's' ] = $this->_prop[ 'description' ]; }
+        /* add -w flag to cleanup cache */
+        $cmd[ 'w' ] = null;
         /* call shell function */
         try   { $result = $this->_shellExec( 'utilities/vanityPrint.sh', $cmd ); }
         /* throw exceptions if pdf execution failed */
