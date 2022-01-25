@@ -12,16 +12,17 @@ OPTIONS:
 
     PDF PROPERTIES
     -t TITLE   document's title
+    -a AUTHOR  document's author
     -s SUBJECT document's subject
     -c CREATOR creator of the document - default is 'vanity.html'
 
-    -a AGENT   pass a custom user agent to use in web request - default is 'internal-pdf-render'
+    -b AGENT   pass a custom user agent to use in web request - default is 'internal-pdf-render'
     -w TRIM    pass -w flag to drop files older than timeout (10 minutes)
 
 EOF
 }
 
-while getopts :u:d:t:s:c:a:w option
+while getopts :u:d:t:a:s:c:b:w option
 do
     case "${option}"
     in
@@ -32,12 +33,14 @@ do
         # PDF PROPERTIES
         # title
         t) TITLE=${OPTARG};;
+        # author
+        a) AUTHOR=${OPTARG};;
         # subject
         s) SUBJECT=${OPTARG};;
         # name of pdf creator ( DEFAULT 'vanity.html' )
         c) CREATOR=${OPTARG};;
         # custom user agent to use in http request ( DEFAULT 'internal-pdf-render' )
-        a) AGENT=${OPTARG};;
+        b) AGENT=${OPTARG};;
         # pass -w to drop files older than timeout
         w) TRIM=1;;
         # return usage info if any unsupported parameters were passed
@@ -51,7 +54,7 @@ done
 # test for binaries and fail critically if we need to
 for i in 'wkhtmltopdf' 'exiftool'; do command -v $i &>/dev/null || { echo "$i required but not found! failing critically..." 1>&2; exit 1; }; done;
 
-# renderPdf - render a url and save a randomly named file to the given directory
+# renderPdf - render a url and save to output path
 function renderPdf() {
     # StdIn: url to render
     local URL; read URL;
@@ -75,16 +78,18 @@ function setPdfProp() {
     local PDF; read PDF;
     # args: the properties to apply
     local TITLE=$1;
-    local SUBJECT=$2;
-    local CREATOR=$3;
+    local AUTHOR=$2;
+    local SUBJECT=$3;
+    local CREATOR=$4;
 
     # execute pdf property update
     exiftool \
         -z -P \
         -XMP:Format="application/pdf" \
+        -XMP:Marked=True \
         -Title="$TITLE" \
         -PDF:Subject="$SUBJECT" -XMP:Description="$SUBJECT" \
-        -XMP:Marked=True \
+        -Author="$AUTHOR" \
         -PDF:Creator="$CREATOR" -XMP:CreatorTool="$CREATOR" \
         -Producer="$CREATOR" \
         -overwrite_original_in_place "$PDF" \
@@ -133,7 +138,7 @@ function trimPdfCache() {
     return $?;
 }
 
-# proceed if a directory was passed
+# pass invalid input state to usage and exit abnormally, otherwise continue
 if [ -z "$DIR" ]; then usage; exit 1; else
 
     # trim cache directory if switch was passed
@@ -145,11 +150,13 @@ if [ -z "$DIR" ]; then usage; exit 1; else
         # get an existing pdf from cache (returns nothing if no cache file was found)
         FILE=$( echo "$DIR" | getPdfCache );
 
-        # create temporary path for pdf rendering and configure trap to ensure script cleans up temporary files on exit
-        TMPPATH=$( mktemp ); trap 'rm -f "'"$TMPPATH"'";' EXIT;
-
-        # create a pdf, set properties, and save to final path $FILE if we didn't get a result from cache
-        [ -z "$FILE" ] && { FILE="$( echo "$URL" | renderPdf "$TMPPATH" "$AGENT" | setPdfProp "$TITLE" "$SUBJECT" "$CREATOR" | setPdfCache "$DIR" )" || { echo 'errors encounters when creating new pdf!' 1>&2; exit 1; } }
+        # if cache did not return the pdf
+        if [ -z "$FILE" ]; then
+            # create temporary path for pdf rendering and configure trap to ensure script cleans up temporary files on exit
+            TMPPATH=$( mktemp ); trap 'rm -f "'"$TMPPATH"'";' EXIT;
+            # create a pdf, set properties, and save to final path $FILE
+            FILE="$( echo "$URL" | renderPdf "$TMPPATH" "$AGENT" | setPdfProp "$TITLE" "$AUTHOR" "$SUBJECT" "$CREATOR" | setPdfCache "$DIR" )" || { echo 'errors encounters when creating new pdf!' 1>&2; exit 1; }
+        fi
 
         # return result and exit code
         [ -z "$FILE" ] && exit 1 || { echo "$FILE" && exit 0; };
