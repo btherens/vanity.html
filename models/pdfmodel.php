@@ -18,6 +18,7 @@ class PdfModel extends Model
         $cmd = [ 'u' => $this->_url, 'd' => $this->basepath() . 'pdf' ];
         /* add optional parameters if we were able to detect them */
         if    ( isset( $this->_prop[ 'title' ] ) ) { $cmd[ 't' ] = $this->_prop[ 'title' ]; }
+        if    ( isset( $this->_prop[ 'author' ] ) ) { $cmd[ 'a' ] = $this->_prop[ 'author' ]; }
         if    ( isset( $this->_prop[ 'description' ] ) ) { $cmd[ 's' ] = $this->_prop[ 'description' ]; }
         /* add -w flag to cleanup cache */
         $cmd[ 'w' ] = null;
