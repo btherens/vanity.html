@@ -202,26 +202,46 @@ class Model
     }
 
     /* execute CLI commands with parameters and get return value */
-    protected function _shellExec( string $str, array $param = null ): ?array
+    protected function _shellExec( string $cmd, array $param = null ): ?array { return $this->_callShell( $this->_buildShellCmd( $cmd, $param ) ); }
+
+    /* return a shell command based on the given base command text, as well as any arguments passed in associative array $param */
+    private function _buildShellCmd( string $cmd, array $param = null ): string
     {
-        /* establish empty variables */
-        $result = null; $exit = null;
-        /* start command */
-        $cmd = $str;
         /* loop through parameters */
         if ( $param ) { foreach( $param as $k => $v )
         {
-            /* append named arguments to command */
-            if   ( gettype( $k ) == 'string' ) { $cmd = $cmd . ' -' . $k . ' $\'' . str_replace( '\'', '\\\'', $v ) . '\''; }
+            /* append named arguments to command, or pass key as flag if value is null */
+            if   ( gettype( $k ) == 'string' ) { $cmd = $cmd . ' -' . $k . ( is_null( $v ) ? '' : ' ' . escapeshellarg( $v ) ); }
             /* otherwise append arguments in order */
-            else { $cmd = $cmd . ' ' . '$\'' . str_replace( '\'', '\\\'', $v ) . '\''; }
+            else { $cmd = $cmd . ' ' . escapeshellarg( $v ); }
         } }
-        /* run shell command, saving return value to $result, exit code to $exit */
-        exec( $cmd, $result, $exit );
-        /* throw from shell execution */
-        if     ( $exit )   { throw new Exception( 'shell exception: ' . $result[0] ); }
-        /* return result if we got one */
-        elseif ( $result ) { return $result; }
+        return $cmd;
+    }
+
+    /* execute the given command and return output - method will throw upon shell exception */
+    private function _callShell( $cmd ): ?array
+    {
+        /* open process and direct results to $stream array */
+        $process = proc_open( $cmd, [ 0 => [ 'pipe', 'r' ], 1 => [ 'pipe', 'w' ], 2 => [ 'pipe', 'w' ] ], $stream );
+        /* throw exception if we couldn't open the process */
+        if ( !is_resource( $process ) ) { throw new Exception( 'error opening shell process!' ); }
+        else
+        {
+            /* close input stream */
+            fclose( $stream[ 0 ] );
+            /* get output */
+            $result = explode( PHP_EOL, trim( stream_get_contents( $stream[ 1 ] ) ) ); fclose( $stream[ 1 ] );
+            /* get error stream */
+            $stderr = stream_get_contents( $stream[ 2 ] ); fclose( $stream[ 2 ] );
+
+            /* close process and record exit code */
+            $exit = proc_close( $process );
+
+            /* throw from shell execution */
+            if     ( $exit )   { throw new Exception( 'shell exception: ' . $stderr ); }
+            /* return result if we got one */
+            elseif ( $result ) { return $result; }
+        }
     }
 
 }
