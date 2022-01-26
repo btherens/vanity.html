@@ -26,24 +26,14 @@ while getopts :u:d:t:a:s:c:b:w option
 do
     case "${option}"
     in
-        # URL to render
         u) URL=${OPTARG};;
-        # directory to use for PDF cache
         d) DIR=${OPTARG};;
-        # PDF PROPERTIES
-        # title
         t) TITLE=${OPTARG};;
-        # author
         a) AUTHOR=${OPTARG};;
-        # subject
         s) SUBJECT=${OPTARG};;
-        # name of pdf creator ( DEFAULT 'vanity.html' )
         c) CREATOR=${OPTARG};;
-        # custom user agent to use in http request ( DEFAULT 'internal-pdf-render' )
         b) AGENT=${OPTARG};;
-        # pass -w to drop files older than timeout
         w) TRIM=1;;
-        # return usage info if any unsupported parameters were passed
         ?) usage; exit 1;;
     esac
 done
