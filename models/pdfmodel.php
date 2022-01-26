@@ -8,14 +8,16 @@ class PdfModel extends Model
 
     /* store website url here */
     private string $_url;
+    /* path to use for document */
+    private string $_cache;
     /* properties loaded into memory here */
     private array $_prop;
 
-    /* renders a $url to pdf and return path */
+    /* renders a $this->_url to pdf and return path */
     private function renderPdf(): string
     {
         /* establish basic command object */
-        $cmd = [ 'u' => $this->_url, 'd' => $this->basepath() . 'pdf' ];
+        $cmd = [ 'u' => $this->_url, 'd' => $this->_cache ];
         /* add optional parameters if we were able to detect them */
         if    ( isset( $this->_prop[ 'title' ] ) ) { $cmd[ 't' ] = $this->_prop[ 'title' ]; }
         if    ( isset( $this->_prop[ 'author' ] ) ) { $cmd[ 'a' ] = $this->_prop[ 'author' ]; }
@@ -23,7 +25,7 @@ class PdfModel extends Model
         /* add -w flag to cleanup cache */
         $cmd[ 'w' ] = null;
         /* call shell function */
-        try   { $result = $this->_shellExec( 'utilities/vanityPrint.sh', $cmd ); }
+        try   { $result = $this->shellExec( 'utilities/vanityPrint.sh', $cmd ); }
         /* throw exceptions if pdf execution failed */
         catch ( Exception $e ) { http_response_code( 400 ); echo 'errors encountered while rendering pdf'; header( 'Location: ./' ); exit; }
         /* return last returned value from shell */
@@ -33,11 +35,16 @@ class PdfModel extends Model
     /* load properties from an html page */
     private function loadHtml( $url ): void
     {
+        /* check response headers of url */
+        $redirect = preg_grep( '/^Location: (.+)$/', $this->getHeaders( $url ) );
+        /* pass any redirection to browser (and bail on pdf rendering) */
+        if ( $redirect ) { header( array_values( $redirect )[ 0 ] ); exit; }
+
         /* use a DomDocument class for html processing */
         $dom = new DOMDocument;
         /* ignore libxml warnings */
         libxml_use_internal_errors( true );
-        /* load the html */
+        /* fully load the html */
         $dom->loadHTMLFile( $url );
         /* declare properties object */
         $prop = [];
@@ -49,20 +56,22 @@ class PdfModel extends Model
     }
 
     /* render pdf and return */
-    public function getPdf( $url ): void
+    public function getPdf( string $uri, string $cache ): void
     {
+        /* establish connection to cache */
+        $this->_cache = $this->basepath() . 'pdf' . DS . $cache;
         /* load html into file */
-        $this->loadHtml( $url ); 
+        $this->loadHtml( BASEDNS . $uri );
         /* render pdf to file */
         $path = $this->renderPdf();
         /* set proper document header */
         header( 'Content-type: application/pdf' );
-        /* generate filename from $url */
-        header( 'Content-Disposition: inline; filename="' . trim( preg_replace( '/[^a-z0-9]+/', '-', preg_replace( '#^[^:/.]*[:/]+#i', '', strtolower( $url ) ) ), '-' ) . '"' );
+        /* generate filename from $uri */
+        header( 'Content-Disposition: inline; filename="' . trim( preg_replace( '/[^a-z0-9]+/', '-', preg_replace( '#^[^:/.]*[:/]+#i', '', strtolower( $uri ) ) ), '-' ) . '"' );
         /* read pdf to output buffer */
         try     { readfile( $path ); }
         /* throw exception and exit */
-        catch   ( Exception $e ) { http_response_code( 400 ); echo 'errors encountered while retrieving pdf'; header( 'Location: ./' ); exit; }
+        catch   ( Exception $e ) { http_response_code( 400 ); echo 'errors encountered while retrieving pdf'; header( 'Location: /' ); exit; }
     }
 
 }
