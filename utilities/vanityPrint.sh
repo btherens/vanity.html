@@ -132,8 +132,10 @@ function trimPdfCache() {
     local TIMEOUT=$1; [ -z "$TIMEOUT" ] && TIMEOUT='10';
     # create the directory if it does not exist
     mkdir -p $DIR &>/dev/null;
-    # drop files older than timeout
-    find $DIR/*.pdf -type f -mmin "+${TIMEOUT}" -maxdepth 1 2>/dev/null | xargs rm;
+    # drop pdf files older than timeout, in path and its subdirectories
+    find $DIR -name '*.pdf' -type f -mmin "+${TIMEOUT}" 2>/dev/null | xargs rm &>/dev/null;
+    # drop any empty directories after removing pdfs
+    find $DIR -type d -empty 2>/dev/null | xargs rm -d &>/dev/null;
     # exit function with exit code from find command
     return $?;
 }
