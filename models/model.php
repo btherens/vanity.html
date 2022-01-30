@@ -23,7 +23,7 @@ class Model
     {
         $this->_db = Db::init();
         /* assign default / override basepath */
-        $this->_basepath = defined( 'RESOURCEFILEPATH' ) ? RESOURCEFILEPATH : 'resource/';
+        $this->_basepath = ( defined( 'RESOURCEFILEPATH' ) ? RESOURCEFILEPATH : 'resource' ) . DS;
     }
 
     /* return the path used for document space */
@@ -201,8 +201,19 @@ class Model
         return $this->_data;
     }
 
+    /* a simple web request for headers (response object returned if successful, false if not) */
+    protected function getHeaders( string $url ) #: aray|false
+    {
+        /* set default stream context to head only */
+        stream_context_set_default( [ 'http' => [ 'method' => 'HEAD' ] ] );
+        /* attempt to get headers from html endpoint, returning false upon exception */
+        if ( $url ) { try { $headers = get_headers( $url ); } catch ( Exception $e ) { $headers = false; } } else { $headers = false; }
+        /* return result */
+        return $headers;
+    }
+
     /* execute CLI commands with parameters and get return value */
-    protected function _shellExec( string $cmd, array $param = null ): ?array { return $this->_callShell( $this->_buildShellCmd( $cmd, $param ) ); }
+    protected function shellExec( string $cmd, array $param = null ): ?array { return $this->_callShell( $this->_buildShellCmd( $cmd, $param ) ); }
 
     /* return a shell command based on the given base command text, as well as any arguments passed in associative array $param */
     private function _buildShellCmd( string $cmd, array $param = null ): string

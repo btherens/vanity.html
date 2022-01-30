@@ -6,6 +6,11 @@ RewriteEngine On
 # R   Redirect    if this rule matches, redirect the browser to a new URL, otherwise new site will be served with current url
 # NC  Nocase      matches are case insensitive
 
+# reroute explicit calls to pdfcontroller
+RewriteRule ^pdf\/ / [L,R,NC]
+# route any url ending in /pdf to pdfcontroller with request path as query
+RewriteRule ^(.*\/|)pdf$ index.php?load=pdf/path/$1 [L,PT,QSA]
+
 # continue if the request was a file that does not exist
 RewriteCond %{REQUEST_FILENAME} !-f
 # continue if the directory does not exist
@@ -17,8 +22,8 @@ RewriteRule ^(.*)$ index.php?load=$1 [L,PT,QSA]
 
 # hide some public paths
 # protect config.php
-RewriteRule ^config.php?$ / [L,R,NC]
+RewriteRule ^config\.php / [L,R,NC]
 # protect utilities directory
-RewriteRule ^utilities/(.*) / [L,R,NC]
+RewriteRule ^utilities\/ / [L,R,NC]
 # protect resource directory
-RewriteRule ^resource/(.*) / [L,R,NC]
+RewriteRule ^resource\/ / [L,R,NC]
