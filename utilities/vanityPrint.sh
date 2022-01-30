@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 usage() { cat << EOF
-usage: vanityPrint -u URL -d DIR -t TITLE -s SUBJECT -c CREATOR -a AGENT [-w]
+usage: vanityPrint -u URL -d DIR [-t TITLE] [-s SUBJECT] [-c CREATOR] [-a AGENT] [-w]
 
 renders a pdf of the given url and saves the result to DIR. DIR serves as this PDF's cache.
 
@@ -20,7 +20,7 @@ OPTIONS:
     -w TRIM    pass -w flag to drop files older than timeout (10 minutes)
 
 EOF
-}
+exit 1; }
 
 while getopts :u:d:t:a:s:c:b:w option
 do
@@ -34,7 +34,7 @@ do
         c) CREATOR=${OPTARG};;
         b) AGENT=${OPTARG};;
         w) TRIM=1;;
-        ?) usage; exit 1;;
+        ?) usage;;
     esac
 done
 # define defaults
@@ -131,7 +131,7 @@ function trimPdfCache() {
 }
 
 # pass invalid input state to usage and exit abnormally, otherwise continue
-if [ -z "$DIR" ]; then usage; exit 1; else
+if [ -z "$DIR" ]; then usage; else
 
     # trim cache directory if switch was passed
     [ "$TRIM" == '1' ] && echo "$DIR" | trimPdfCache;

@@ -66,8 +66,8 @@ class PdfModel extends Model
         $path = $this->renderPdf();
         /* set proper document header */
         header( 'Content-type: application/pdf' );
-        /* generate filename from $uri */
-        header( 'Content-Disposition: inline; filename="' . trim( preg_replace( '/[^a-z0-9]+/', '-', preg_replace( '#^[^:/.]*[:/]+#i', '', strtolower( $uri ) ) ), '-' ) . '"' );
+        /* generate filename from $uri (or site name if uri is blank) */
+        header( 'Content-Disposition: inline; filename="' . trim( preg_replace( '/[^a-z0-9]+/', '-', preg_replace( '#^[^:/.]*[:/]+#i', '', strtolower( $uri ?: BASEDNS ) ) ), '-' ) . '"' );
         /* read pdf to output buffer */
         try     { readfile( $path ); }
         /* throw exception and exit */
