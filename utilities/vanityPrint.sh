@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 usage() { cat << EOF
-usage: vanityPrint -u URL -d DIR -t TITLE -s SUBJECT -c CREATOR -a AGENT [-w]
+usage: vanityPrint -u URL -d DIR [-t TITLE] [-s SUBJECT] [-c CREATOR] [-a AGENT] [-w]
 
 renders a pdf of the given url and saves the result to DIR. DIR serves as this PDF's cache.
 
@@ -20,31 +20,21 @@ OPTIONS:
     -w TRIM    pass -w flag to drop files older than timeout (10 minutes)
 
 EOF
-}
+exit 1; }
 
 while getopts :u:d:t:a:s:c:b:w option
 do
     case "${option}"
     in
-        # URL to render
         u) URL=${OPTARG};;
-        # directory to use for PDF cache
         d) DIR=${OPTARG};;
-        # PDF PROPERTIES
-        # title
         t) TITLE=${OPTARG};;
-        # author
         a) AUTHOR=${OPTARG};;
-        # subject
         s) SUBJECT=${OPTARG};;
-        # name of pdf creator ( DEFAULT 'vanity.html' )
         c) CREATOR=${OPTARG};;
-        # custom user agent to use in http request ( DEFAULT 'internal-pdf-render' )
         b) AGENT=${OPTARG};;
-        # pass -w to drop files older than timeout
         w) TRIM=1;;
-        # return usage info if any unsupported parameters were passed
-        ?) usage; exit 1;;
+        ?) usage;;
     esac
 done
 # define defaults
@@ -132,14 +122,16 @@ function trimPdfCache() {
     local TIMEOUT=$1; [ -z "$TIMEOUT" ] && TIMEOUT='10';
     # create the directory if it does not exist
     mkdir -p $DIR &>/dev/null;
-    # drop files older than timeout
-    find $DIR/*.pdf -type f -mmin "+${TIMEOUT}" -maxdepth 1 2>/dev/null | xargs rm;
+    # drop pdf files older than timeout, in path and its subdirectories
+    find $DIR -name '*.pdf' -type f -mmin "+${TIMEOUT}" 2>/dev/null | xargs rm &>/dev/null;
+    # drop any empty directories after removing pdfs
+    find $DIR -type d -empty 2>/dev/null | xargs rm -d &>/dev/null;
     # exit function with exit code from find command
     return $?;
 }
 
 # pass invalid input state to usage and exit abnormally, otherwise continue
-if [ -z "$DIR" ]; then usage; exit 1; else
+if [ -z "$DIR" ]; then usage; else
 
     # trim cache directory if switch was passed
     [ "$TRIM" == '1' ] && echo "$DIR" | trimPdfCache;
